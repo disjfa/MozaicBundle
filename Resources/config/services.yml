@@ -1,0 +1,4 @@
+services:
+#    disjfa_mozaic.example:
+#        class: Disjfa\MozaicBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

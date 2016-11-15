@@ -1,0 +1,23 @@
+{
+  "name": "disjfa/mozaic-bundle",
+  "description": "Mozaic puzzle for symfony, can also be use in glynn-admin-symfony",
+  "keywords": [
+    "puzzle"
+  ],
+  "type": "symfony-bundle",
+  "require": {
+    "crewlabs/unsplash": "^2.2"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "disjfa",
+      "email": "disjfa@disjfa.nl"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Disjfa\\MozaicBundle\\": ""
+    }
+  }
+}
