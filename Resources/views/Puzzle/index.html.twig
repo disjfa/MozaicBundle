@@ -1,4 +1,4 @@
-{% extends "glynn-admin/base.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% block title %}
     Puzzle - {{ parent() }}
@@ -7,10 +7,10 @@
 {% block body %}
     {% for photo in unsplashPhotos %}
         <div>
-        <a href="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': photo.unsplashId}) }}">
-            <img src="{{ photo.urlRegular }}" alt="">
-            {{ photo.unsplashUser.name }}
-        </a>
+            <a href="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': photo.unsplashId}) }}">
+                <img src="{{ photo.urlRegular }}" alt="">
+                {{ photo.unsplashUser.name }}
+            </a>
         </div>
     {% endfor %}
 {% endblock %}

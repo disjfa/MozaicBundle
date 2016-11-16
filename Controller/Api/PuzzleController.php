@@ -1,53 +1,34 @@
 <?php
 
-namespace Disjfa\MozaicBundle\Controller;
+namespace Disjfa\MozaicBundle\Controller\Api;
 
 use Crew\Unsplash\Exception as UnsplashException;
 use Disjfa\MozaicBundle\Entity\UnsplashPhoto;
+use Disjfa\MozaicBundle\Mozaic\MozaicPuzzle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/mozaic")
+ * @Route("/api/mozaic")
  */
 class PuzzleController extends Controller
 {
     /**
-     * @Route("/", name="disjfa_mozaic_puzzle_index")
-     */
-    public function indexAction()
-    {
-        $unsplashPhotos = $this->getDoctrine()->getRepository(UnsplashPhoto::class)->findAll();
-        return $this->render('DisjfaMozaicBundle:Puzzle:index.html.twig', [
-            'unsplashPhotos' => $unsplashPhotos,
-        ]);
-    }
-
-    /**
-     * @Route("/random", name="disjfa_mozaic_puzzle_random")
-     */
-    public function randomAction()
-    {
-        try {
-            $unsplashClient = $this->get('disjfa_mozaic.unsplash_client');
-            $unsplashPhoto = $unsplashClient->random();
-        } catch (UnsplashException $e) {
-            $unsplashPhotos = $this->getDoctrine()->getRepository(UnsplashPhoto::class)->findAll();
-            shuffle($unsplashPhotos);
-            $unsplashPhoto = current($unsplashPhotos);
-        }
-
-        return $this->redirectToRoute('disjfa_mozaic_puzzle_photo', ['unsplashPhoto' => $unsplashPhoto->getUnsplashId()]);
-    }
-
-    /**
-     * @Route("/{unsplashPhoto}", name="disjfa_mozaic_puzzle_photo")
+     * @Route("/{unsplashPhoto}", name="disjfa_mozaic_api_puzzle_photo")
      * @param UnsplashPhoto $unsplashPhoto
      * @return Response
      */
     public function photoAction(UnsplashPhoto $unsplashPhoto)
     {
+
+//        $mozaicPuzzel = new MozaicPuzzle($unsplashPhoto);
+//        dump($mozaicPuzzel);
+//        exit;
+//        dump($unsplashPhoto);
+//        exit;
+
         $image = $unsplashPhoto->getUrlRaw();
         $width = $unsplashPhoto->getWidth();
         //$height = 3264;
@@ -57,8 +38,8 @@ class PuzzleController extends Controller
         $h = $w / 16 * 9;
 
         $columns = [];
-        $colY = 6;
-        $colX = 5;
+        $colY = 5;
+        $colX = 7;
 
         $realWidth = floor($width / $colX);
         $realHeight = floor($height / $colY);
@@ -118,18 +99,29 @@ class PuzzleController extends Controller
                         'top' => $j * $blockHeight,
                         'width' => $iWidth,
                         'height' => $iHeight,
-                        'x' => $sizeX,
-                        'y' => $sizeY,
+                        'widthPercent' => $iWidth / $w * 100,
+                        'heightPercent' => $iHeight / $h * 100,
+                        'x' => $i,
+                        'y' => $j,
                     ],
+                    'percent' => [
+                        'left' => $i * $blockWidth / $w * 100,
+                        'top' => $j * $blockHeight / $h * 100,
+                        'width' => $iWidth / $w * 100,
+                        'height' => $iHeight / $h * 100,
+
+                    ]
                 ];
             }
             ksort($columns[$i]);
         }
         ksort($columns);
 
+        return new JsonResponse(['mozaic' => $columns]);
+        exit;
+
         return $this->render('DisjfaMozaicBundle:Puzzle:photo.html.twig', [
             'columns' => $columns,
-            'unsplashPhoto' => $unsplashPhoto,
         ]);
     }
 }

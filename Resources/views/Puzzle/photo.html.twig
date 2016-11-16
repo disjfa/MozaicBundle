@@ -1,20 +1,23 @@
-{% extends "glynn-admin/base.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% block title %}
     Puzzle - {{ parent() }}
 {% endblock %}
 
 {% block body %}
-    aaa
-    <hr>
-    <div style="position:relative">
-        {% for row in columns %}
-            {% for column in row %}
-                {% if column %}
-                    <img src="{{ column.image }}" alt="" style="position: absolute; left: {{ column.styles.left }}px; top: {{ column.styles.top }}px; width: {{ column.styles.width }}px; height: {{ column.styles.height }}px; ">
-                {% endif %}
-            {% endfor %}
-        {% endfor %}
-    </div>
+
+    <h1>Hello</h1>
+
+    <mozaic unsplash-route="{{ path('disjfa_mozaic_api_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}"></mozaic>
+
+    {#<div style="position:relative">#}
+        {#{% for row in columns %}#}
+            {#{% for column in row %}#}
+                {#{% if column %}#}
+                    {#<img src="{{ column.image }}" alt="" style=" position: absolute; left: {{ column.styles.left }}px; top: {{ column.styles.top }}px; width: {{ column.styles.width-4 }}px; height: {{ column.styles.height-4 }}px; ">#}
+                {#{% endif %}#}
+            {#{% endfor %}#}
+        {#{% endfor %}#}
+    {#</div>#}
 {% endblock %}
 

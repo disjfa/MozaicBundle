@@ -1,4 +1,13 @@
 services:
-#    disjfa_mozaic.example:
-#        class: Disjfa\MozaicBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+  disjfa_mozaic.mozaic_menu_listener:
+    class: Disjfa\MozaicBundle\GlynnAdminMenu\MozaicMenuListener
+    tags:
+      - { name: 'kernel.event_listener', event: 'glynn_admin.menu_configure', method: 'onMenuConfigure' }
+
+  disjfa_mozaic.unsplash_client:
+    class: Disjfa\MozaicBundle\Services\UnsplashClient
+    arguments:
+      - '%disjfa_mozaic.unsplash_application_id%'
+      - '%disjfa_mozaic.unsplash_secret%'
+      - '@router'
+      - '@doctrine.orm.entity_manager'
