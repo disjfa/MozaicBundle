@@ -60,13 +60,13 @@ class UnsplashClient
         $unsplashUser = $this->entityManager->getRepository(UnsplashUser::class)->find($photo->user['id']);
         if (null === $unsplashUser) {
             $unsplashUser = new UnsplashUser($photo->user);
-
             $this->entityManager->persist($unsplashUser);
         }
 
         $unsplashPhoto = $this->entityManager->getRepository(UnsplashPhoto::class)->find($photo->id);
         if (null === $unsplashPhoto) {
-            $unsplashPhoto = new UnsplashPhoto($unsplashUser, $photo->id, $photo->created_at, $photo->width, $photo->height, $photo->color, $photo->likes, $photo->urls, $photo->links);
+            $location = isset($photo->location) ?$photo->location : [];
+            $unsplashPhoto = new UnsplashPhoto($unsplashUser, $photo->id, $photo->created_at, $photo->width, $photo->height, $photo->color, $photo->likes, $photo->urls, $photo->links, $location);
             $this->entityManager->persist($unsplashPhoto);
         }
 

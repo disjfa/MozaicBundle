@@ -94,6 +94,8 @@ class PuzzleController extends Controller
 
                 $columns[$i][$j] = [
                     'image' => $image . '?' . http_build_query($params, '&amp;'),
+                    'x' => $i,
+                    'y' => $j,
                     'styles' => [
                         'left' => $i * $blockWidth,
                         'top' => $j * $blockHeight,
@@ -101,8 +103,6 @@ class PuzzleController extends Controller
                         'height' => $iHeight,
                         'widthPercent' => $iWidth / $w * 100,
                         'heightPercent' => $iHeight / $h * 100,
-                        'x' => $i,
-                        'y' => $j,
                     ],
                     'percent' => [
                         'left' => $i * $blockWidth / $w * 100,
@@ -117,11 +117,16 @@ class PuzzleController extends Controller
         }
         ksort($columns);
 
-        return new JsonResponse(['mozaic' => $columns]);
-        exit;
+        $mozaic = [];
+        foreach($columns as $row) {
+            foreach($row as $item) {
+                if(false === $item) {
+                    continue;
+                }
+                $mozaic[] = $item;
+            }
+        }
 
-        return $this->render('DisjfaMozaicBundle:Puzzle:photo.html.twig', [
-            'columns' => $columns,
-        ]);
+        return new JsonResponse(['mozaic' => $mozaic]);
     }
 }

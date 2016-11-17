@@ -5,19 +5,20 @@
 {% endblock %}
 
 {% block body %}
+    <h1>Mozaic puzzle</h1>
 
-    <h1>Hello</h1>
-
-    <mozaic unsplash-route="{{ path('disjfa_mozaic_api_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}"></mozaic>
-
-    {#<div style="position:relative">#}
-        {#{% for row in columns %}#}
-            {#{% for column in row %}#}
-                {#{% if column %}#}
-                    {#<img src="{{ column.image }}" alt="" style=" position: absolute; left: {{ column.styles.left }}px; top: {{ column.styles.top }}px; width: {{ column.styles.width-4 }}px; height: {{ column.styles.height-4 }}px; ">#}
-                {#{% endif %}#}
-            {#{% endfor %}#}
-        {#{% endfor %}#}
-    {#</div>#}
+    <div class="row">
+        <div class="col-xl-10 col-xs-12">
+            <mozaic unsplash-route="{{ path('disjfa_mozaic_api_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}"></mozaic>
+        </div>
+        <div class="col-xl-2 col-xs-12">
+            <h4>{{ unsplashPhoto.unsplashUser.name }}</h4>
+            <a href="{{ unsplashPhoto.unsplashUser.portfolioUrl }}">
+                View portfolio
+            </a>
+            <hr>
+            <a href="{{ path('disjfa_mozaic_puzzle_random') }}">Random new photo</a>
+        </div>
+    </div>
 {% endblock %}
 

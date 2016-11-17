@@ -67,6 +67,42 @@ class UnsplashPhoto
 
     /**
      * @var string
+     * @ORM\Column(name="title", type="string", nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     * @ORM\Column(name="name", type="string", nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var string
+     * @ORM\Column(name="city", type="string", nullable=true)
+     */
+    private $city;
+
+    /**
+     * @var string
+     * @ORM\Column(name="country", type="string", nullable=true)
+     */
+    private $country;
+
+    /**
+     * @var float
+     * @ORM\Column(name="latitude", type="float", nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var float
+     * @ORM\Column(name="longitude", type="float", nullable=true)
+     */
+    private $longitude;
+
+    /**
+     * @var string
      * @ORM\Column(name="link_html", type="string")
      */
     private $linkHtml;
@@ -89,7 +125,7 @@ class UnsplashPhoto
      * @param array $urls
      * @param array $links
      */
-    public function __construct(UnsplashUser $unsplashUser, $unsplashId, $createdAt, $width, $height, $color, $likes, array $urls, array $links)
+    public function __construct(UnsplashUser $unsplashUser, $unsplashId, $createdAt, $width, $height, $color, $likes, array $urls, array $links, array $location)
     {
         $this->unsplashUser = $unsplashUser;
         $this->unsplashId = $unsplashId;
@@ -107,6 +143,23 @@ class UnsplashPhoto
         }
         if(array_key_exists('html', $links)) {
             $this->linkHtml = $links['html'];
+        }
+
+        if(array_key_exists('title', $location)) {
+            $this->title = $location['title'];
+        }
+        if(array_key_exists('name', $location)) {
+            $this->name = $location['name'];
+        }
+        if(array_key_exists('city', $location)) {
+            $this->city = $location['city'];
+        }
+        if(array_key_exists('country', $location)) {
+            $this->country = $location['country'];
+        }
+        if(array_key_exists('position', $location)) {
+            $this->latitude = $location['position']['latitude'];
+            $this->longitude = $location['position']['longitude'];
         }
     }
 
