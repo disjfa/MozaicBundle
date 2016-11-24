@@ -11,3 +11,9 @@ services:
       - '%disjfa_mozaic.unsplash_secret%'
       - '@router'
       - '@doctrine.orm.entity_manager'
+
+  disjfa_mozaic.unsplash_extension:
+    class: Disjfa\MozaicBundle\Twig\UnsplashExtension
+    public: false
+    tags:
+        - { name: twig.extension }

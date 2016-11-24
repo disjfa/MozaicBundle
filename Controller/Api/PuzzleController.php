@@ -3,12 +3,18 @@
 namespace Disjfa\MozaicBundle\Controller\Api;
 
 use Crew\Unsplash\Exception as UnsplashException;
+use DateTime;
 use Disjfa\MozaicBundle\Entity\UnsplashPhoto;
+use Disjfa\MozaicBundle\Entity\UserPhoto;
 use Disjfa\MozaicBundle\Mozaic\MozaicPuzzle;
+use FOS\UserBundle\Model\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @Route("/api/mozaic")
@@ -118,15 +124,63 @@ class PuzzleController extends Controller
         ksort($columns);
 
         $mozaic = [];
-        foreach($columns as $row) {
-            foreach($row as $item) {
-                if(false === $item) {
+        foreach ($columns as $row) {
+            foreach ($row as $item) {
+                if (false === $item) {
                     continue;
                 }
                 $mozaic[] = $item;
             }
         }
+        $now = new DateTime('now');
+        $dates = [
+            $unsplashPhoto->getId() => $now->format('r')
+        ];
+
+        $this->get('session')->set('dates', $dates);
+        $this->get('session')->save();
 
         return new JsonResponse(['mozaic' => $mozaic]);
+    }
+
+    /**
+     * @Route("/{unsplashPhoto}/finish", name="disjfa_mozaic_api_puzzle_finish")
+     * @Method("POST")
+     * @param UnsplashPhoto $unsplashPhoto
+     * @return Response
+     */
+    public function finishAction(UnsplashPhoto $unsplashPhoto, Request $request)
+    {
+        $requestData = json_decode($request->getContent(), true);
+        if (false === array_key_exists('token', $requestData)) {
+            throw new BadRequestHttpException('No token found');
+        }
+
+        if (false === $this->isCsrfTokenValid($unsplashPhoto->getId(), $requestData['token'])) {
+            throw new BadRequestHttpException('Bad token found');
+        }
+
+        $user = $this->getUser();
+        if ($user instanceof User) {
+            $userId = $user->getId();
+        } else {
+            $userId = null;
+        }
+
+        $dateFinished = new DateTime('now');
+        $dates = $this->get('session')->get('dates');
+        if (isset($dates[$unsplashPhoto->getId()])) {
+            $dateStarted = new DateTime($dates[$unsplashPhoto->getId()]);
+        } else {
+            $dateStarted = $dateFinished;
+        }
+
+        $userPhoto = new UserPhoto($unsplashPhoto, $userId, $dateStarted, $dateFinished);
+        $this->getDoctrine()->getManager()->persist($userPhoto);
+        $this->getDoctrine()->getManager()->flush($userPhoto);
+
+        return new JsonResponse([
+            'message' => 'saved',
+        ]);
     }
 }

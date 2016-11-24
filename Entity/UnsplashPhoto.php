@@ -244,7 +244,7 @@ class UnsplashPhoto
     }
 
     /**
-     * @return mixed
+     * @return UnsplashUser
      */
     public function getUnsplashUser()
     {

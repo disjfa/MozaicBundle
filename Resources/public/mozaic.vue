@@ -24,14 +24,19 @@
                 <img :src="piece.shuffled.image" :style="getStyles(piece)" class="mozaic-piece" @click="checkPiece(piece)" :class="{'active': isActivePiece(piece)}">
             </div>
         </div>
-        <div>ClickCount: {{ clickCount }} {{ done }}</div>
+        <div>
+            ClickCount: <span class="tag tag-success">{{ clickCount }}</span>
+
+            <span class="tag tag-success" v-if="done">Success</span>
+        </div>
+
     </div>
 </template>
 <script>
     import Vue from 'vue';
 
     export default {
-        props: ['unsplashRoute'],
+        props: ['unsplashRoute', 'token', 'finishRoute'],
         data () {
             return {
                 activePiece: false,
@@ -59,6 +64,9 @@
                 return this.activePiece.x === piece.x && this.activePiece.y === piece.y;
             },
             areWeDone() {
+                if(this.done) {
+                    return false;
+                }
                 for(var i in this.mozaic) {
                     if(this.mozaic[i].x !== this.mozaic[i].shuffled.x) {
                         return false;
@@ -67,7 +75,19 @@
                         return false;
                     }
                 }
+
+                this.finished();
                 this.done = true;
+            },
+            finished() {
+                this
+                    .$http
+                    .post(this.finishRoute, {
+                        token: this.token,
+                    })
+                    .then(function (result) {
+                        console.log(result);
+                    });
             },
             checkPiece(piece) {
                 if(this.done) {
@@ -107,6 +127,7 @@
             },
             shuffle(a) {
                 var array = [];
+                var i;
                 for(i in a) {
                     array.push(a[i]);
                 }
@@ -126,7 +147,7 @@
             },
             setupMozaic(data) {
                 this.shuffle(data.mozaic);
-                for(i in this.shuffled) {
+                for(let i in this.shuffled) {
                     data.mozaic[i]['shuffled'] = this.shuffled[i];
                 }
 

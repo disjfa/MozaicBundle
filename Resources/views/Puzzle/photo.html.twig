@@ -1,24 +1,40 @@
 {% extends "::base.html.twig" %}
 
+{% block header %}
+    <meta property="og:type" content="puzzle"/>
+    <meta property="og:url" content="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}"/>
+    <meta property="og:title" content="Puzzle by {{ unsplashPhoto.unsplashUser.name }}"/>
+    <meta property="og:image" content="{{ unsplashPhoto | unsplash_photo_block }}"/>
+    <meta property="og:image:width" content="600"/>
+    <meta property="og:image:height" content="338"/>
+    <meta property="og:description" content="Play a mozaic puzzle"/>
+{% endblock %}
+
 {% block title %}
-    Puzzle - {{ parent() }}
+    Puzzle by {{ unsplashPhoto.unsplashUser.name }} - {{ parent() }}
 {% endblock %}
 
 {% block body %}
-    <h1>Mozaic puzzle</h1>
+
+    <h1>Mozaic by dimme</h1>
 
     <div class="row">
         <div class="col-xl-10 col-xs-12">
-            <mozaic unsplash-route="{{ path('disjfa_mozaic_api_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}"></mozaic>
+            <mozaic unsplash-route="{{ path('disjfa_mozaic_api_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}" token="{{ csrf_token(unsplashPhoto.id) }}" finish-route="{{ path('disjfa_mozaic_api_puzzle_finish', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}"></mozaic>
+            <hr>
+            <h3>Share</h3>
+            <addthis></addthis>
+            <br>
         </div>
         <div class="col-xl-2 col-xs-12">
-            <h4>{{ unsplashPhoto.unsplashUser.name }}</h4>
-            <a href="{{ unsplashPhoto.unsplashUser.portfolioUrl }}">
-                View portfolio
-            </a>
+            <h4>
+                Photo by <a href="{{ unsplashPhoto.unsplashUser.portfolioUrl }}">{{ unsplashPhoto.unsplashUser.name }}</a>
+            </h4>
+            <hr>
+            All photos are on <a href="https://unsplash.com/">Unsplash</a>
             <hr>
             <a href="{{ path('disjfa_mozaic_puzzle_random') }}">Random new photo</a>
+
         </div>
     </div>
 {% endblock %}
-

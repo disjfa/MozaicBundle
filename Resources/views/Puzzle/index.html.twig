@@ -5,14 +5,22 @@
 {% endblock %}
 
 {% block body %}
-    {% for photo in unsplashPhotos %}
-        <div>
-            <a href="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': photo.unsplashId}) }}">
-                <img src="{{ photo.urlRegular }}" alt="">
-                {{ photo.unsplashUser.name }}
-            </a>
-        </div>
-    {% endfor %}
+    <h1>Daily photos</h1>
+
+    <div class="row">
+        {% for daily in lastPhotos %}
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <a href="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': daily.unsplashPhoto.unsplashId}) }}">
+                        <img src="{{ daily.unsplashPhoto | unsplash_photo_block }}" alt="" class="card-img img-fluid">
+                        <div class="card-block">
+                            {{ daily.unsplashPhoto.unsplashUser.name }}
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 
