@@ -24,7 +24,7 @@ class Daily
     public function __construct(UnsplashPhoto $unsplashPhoto, DailyDateTime $dateDaily)
     {
         $this->unsplashPhoto = $unsplashPhoto;
-        $this->dateDaily = (string) $dateDaily;
+        $this->dateDaily = (string)$dateDaily;
     }
 
     /**
