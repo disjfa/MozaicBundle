@@ -1,6 +1,7 @@
-{% extends "::base.html.twig" %}
+{% extends "@GlynnTemplate/base.html.twig" %}
 
-{% block header %}
+{% block meta %}
+    {{ parent() }}
     <meta property="og:type" content="puzzle"/>
     <meta property="og:url" content="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}"/>
     <meta property="og:title" content="Puzzle by {{ unsplashPhoto.unsplashUser.name }}"/>
@@ -15,26 +16,28 @@
 {% endblock %}
 
 {% block body %}
+    <div class="container">
+        <h1>Mozaic by dimme</h1>
 
-    <h1>Mozaic by dimme</h1>
+        <div class="row">
+            <div class="col-xl-10 col-xs-12">
+                <mozaic unsplash-route="{{ path('disjfa_mozaic_api_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}" token="{{ csrf_token(unsplashPhoto.id) }}" finish-route="{{ path('disjfa_mozaic_api_puzzle_finish', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}"></mozaic>
+                <hr>
+                {#<h3>Share</h3>#}
+                {#<addthis></addthis>#}
+                <br>
+            </div>
+            <div class="col-xl-2 col-xs-12">
+                <h4>
+                    Photo by
+                    <a href="{{ unsplashPhoto.unsplashUser.portfolioUrl }}">{{ unsplashPhoto.unsplashUser.name }}</a>
+                </h4>
+                <hr>
+                All photos are on <a href="https://unsplash.com/">Unsplash</a>
+                <hr>
+                <a href="{{ path('disjfa_mozaic_puzzle_random') }}">Random new photo</a>
 
-    <div class="row">
-        <div class="col-xl-10 col-xs-12">
-            <mozaic unsplash-route="{{ path('disjfa_mozaic_api_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}" token="{{ csrf_token(unsplashPhoto.id) }}" finish-route="{{ path('disjfa_mozaic_api_puzzle_finish', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}"></mozaic>
-            <hr>
-            <h3>Share</h3>
-            <addthis></addthis>
-            <br>
-        </div>
-        <div class="col-xl-2 col-xs-12">
-            <h4>
-                Photo by <a href="{{ unsplashPhoto.unsplashUser.portfolioUrl }}">{{ unsplashPhoto.unsplashUser.name }}</a>
-            </h4>
-            <hr>
-            All photos are on <a href="https://unsplash.com/">Unsplash</a>
-            <hr>
-            <a href="{{ path('disjfa_mozaic_puzzle_random') }}">Random new photo</a>
-
+            </div>
         </div>
     </div>
 {% endblock %}

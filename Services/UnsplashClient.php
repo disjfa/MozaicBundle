@@ -28,16 +28,17 @@ class UnsplashClient
      *
      * @throws Exception
      */
-    public function __construct($applicationId, $secret, RouterInterface $router, EntityManagerInterface $entityManager)
+    public function __construct(string $applicationId, string $secret, RouterInterface $router, EntityManagerInterface $entityManager)
     {
         if (empty($applicationId) || empty($secret)) {
-            throw new Exception('No applicationId or secret set in parameters');
+            throw new Exception('No "disjfa_mozaic.unsplash.application_id" or "disjfa_mozaic.unsplash.secret" set in parameters');
         }
 
         HttpClient::init([
             'applicationId' => $applicationId,
             'secret' => $secret,
             'callbackUrl' => $router->generate('disjfa_mozaic_unsplash_callback', [], 0),
+            'utmSource' => 'dimme_mozaic',
         ]);
         $this->entityManager = $entityManager;
     }

@@ -21,7 +21,7 @@ class UnsplashController extends Controller
     public function callbackAction(Request $request)
     {
         // @todo this does nothing
-        return $this->render('DisjfaMozaicBundle:Puzzle:index.html.twig', [
+        return $this->render('@DisjfaMozaic/Puzzle/index.html.twig', [
         ]);
     }
 }

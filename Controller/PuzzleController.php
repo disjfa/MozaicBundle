@@ -3,11 +3,11 @@
 namespace Disjfa\MozaicBundle\Controller;
 
 use Crew\Unsplash\Exception as UnsplashException;
-use DateTime;
 use Disjfa\MozaicBundle\Entity\Daily;
 use Disjfa\MozaicBundle\Entity\DailyDateTime;
 use Disjfa\MozaicBundle\Entity\UnsplashPhoto;
 use Disjfa\MozaicBundle\Entity\UserPhoto;
+use Disjfa\MozaicBundle\Services\UnsplashClient;
 use FOS\UserBundle\Model\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,11 +19,21 @@ use Symfony\Component\HttpFoundation\Response;
 class PuzzleController extends Controller
 {
     /**
+     * @var UnsplashClient
+     */
+    private $unsplashClient;
+
+    public function __construct(UnsplashClient $unsplashClient)
+    {
+        $this->unsplashClient = $unsplashClient;
+    }
+    
+    /**
      * @Route("/", name="disjfa_mozaic_puzzle_index")
      */
     public function indexAction()
     {
-        return $this->render('DisjfaMozaicBundle:Puzzle:index.html.twig', [
+        return $this->render('@DisjfaMozaic/Puzzle/index.html.twig', [
             'lastPhotos' => $this->getDoctrine()->getRepository(Daily::class)->findLatest(),
         ]);
     }
@@ -37,7 +47,7 @@ class PuzzleController extends Controller
             return $this->createAccessDeniedException('PLease log in');
         }
 
-        return $this->render('DisjfaMozaicBundle:Puzzle:my_progress.html.twig', [
+        return $this->render('@DisjfaMozaic/Puzzle/my_progress.html.twig', [
             'userPhotos' => $this->getDoctrine()->getRepository(UserPhoto::class)->findByMyPhotos($this->getUser()->getId()),
         ]);
     }
@@ -52,8 +62,7 @@ class PuzzleController extends Controller
 
         if (null === $daily) {
             try {
-                $unsplashClient = $this->get('disjfa_mozaic.unsplash_client');
-                $unsplashPhoto = $unsplashClient->random();
+                $unsplashPhoto = $this->unsplashClient->random();
             } catch (UnsplashException $e) {
                 $unsplashPhotos = $this->getDoctrine()->getRepository(UnsplashPhoto::class)->findAll();
                 shuffle($unsplashPhotos);
@@ -76,8 +85,7 @@ class PuzzleController extends Controller
     public function randomAction()
     {
         try {
-            $unsplashClient = $this->get('disjfa_mozaic.unsplash_client');
-            $unsplashPhoto = $unsplashClient->random();
+            $unsplashPhoto = $this->unsplashClient->random();
         } catch (UnsplashException $e) {
             $unsplashPhotos = $this->getDoctrine()->getRepository(UnsplashPhoto::class)->findAll();
             shuffle($unsplashPhotos);
@@ -94,7 +102,7 @@ class PuzzleController extends Controller
      */
     public function photoAction(UnsplashPhoto $unsplashPhoto)
     {
-        return $this->render('DisjfaMozaicBundle:Puzzle:photo.html.twig', [
+        return $this->render('@DisjfaMozaic/Puzzle/photo.html.twig', [
             'unsplashPhoto' => $unsplashPhoto,
         ]);
     }

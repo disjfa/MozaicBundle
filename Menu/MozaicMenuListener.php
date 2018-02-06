@@ -1,16 +1,9 @@
 <?php
 
-namespace Disjfa\MozaicBundle\GlynnAdminMenu;
+namespace Disjfa\MozaicBundle\Menu;
 
-use Doctrine\ORM\EntityManagerInterface;
-use GlyynnAdminBundle\Menu\ConfigureMenuEvent;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use UserBundle\Entity\User;
+use App\Menu\ConfigureMenuEvent;
 
-/**
- * Class MediaMenuListener
- * @package UserBundle\GlynnAdminMenu
- */
 class MozaicMenuListener
 {
     /**

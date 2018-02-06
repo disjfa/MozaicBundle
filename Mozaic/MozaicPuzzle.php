@@ -94,7 +94,7 @@ class MozaicPuzzle
                     ])
                 ];
 
-                $this->blocks[] = new MozaicBlock($i, $j)
+                $this->blocks[] = new MozaicBlock($i, $j);
 
                 $columns[$i][$j] = [
                     'image' => $image . '?' . http_build_query($params, '&amp;'),
