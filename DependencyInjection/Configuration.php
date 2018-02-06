@@ -20,9 +20,17 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('disjfa_mozaic');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+            ->arrayNode('unsplash')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->scalarNode('application_id')->defaultValue('')->end()
+            ->scalarNode('secret')->defaultValue('')->end()
+            ->end()
+            ->end() // twitter
+            ->end()
+        ;
 
         return $treeBuilder;
     }

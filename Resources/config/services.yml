@@ -7,8 +7,8 @@ services:
   disjfa_mozaic.unsplash_client:
     class: Disjfa\MozaicBundle\Services\UnsplashClient
     arguments:
-      - '%disjfa_mozaic.unsplash_application_id%'
-      - '%disjfa_mozaic.unsplash_secret%'
+      - '%disjfa_mozaic.unsplash.application_id%'
+      - '%disjfa_mozaic.unsplash.secret%'
       - '@router'
       - '@doctrine.orm.entity_manager'
 
