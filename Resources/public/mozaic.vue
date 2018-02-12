@@ -24,6 +24,7 @@
 </template>
 <script>
   import Vue from 'vue';
+  import axios from 'axios';
 
   export default {
     props: ['unsplashRoute', 'token', 'finishRoute'],
@@ -82,8 +83,7 @@
         this.done = true;
       },
       finished() {
-        this
-          .$http
+        axios
           .post(this.finishRoute, {
             token: this.token,
           })
@@ -118,10 +118,9 @@
         }
       },
       initData() {
-        this
-          .$http
+        axios
           .get(this.unsplashRoute)
-          .then(function (result) {
+          .then((result) => {
             this.setupMozaic(result.data);
           });
       },

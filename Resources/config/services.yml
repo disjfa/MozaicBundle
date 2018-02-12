@@ -35,6 +35,5 @@ services:
 
   Disjfa\MozaicBundle\Twig\UnsplashExtension:
     class: Disjfa\MozaicBundle\Twig\UnsplashExtension
-    public: false
     tags:
         - { name: twig.extension }
