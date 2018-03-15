@@ -6,7 +6,8 @@
   ],
   "type": "symfony-bundle",
   "require": {
-    "crewlabs/unsplash": "^2.2"
+    "crewlabs/unsplash": "^2.2",
+    "symfony/orm-pack": "^1.0"
   },
   "license": "MIT",
   "authors": [
