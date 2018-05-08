@@ -25,6 +25,11 @@ services:
     tags:
       - { name: 'kernel.event_listener', event: 'glynn_site.menu_configure', method: 'onMenuConfigure' }
 
+  Disjfa\MozaicBundle\Menu\MozaicAdminMenuListener:
+    class: Disjfa\MozaicBundle\Menu\MozaicAdminMenuListener
+    tags:
+      - { name: 'kernel.event_listener', event: 'glynn_admin.menu_configure', method: 'onMenuConfigure' }
+
   Disjfa\MozaicBundle\Services\UnsplashClient:
     class: Disjfa\MozaicBundle\Services\UnsplashClient
     arguments:

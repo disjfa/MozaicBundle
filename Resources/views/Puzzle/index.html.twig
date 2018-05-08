@@ -1,4 +1,4 @@
-{% extends "@GlynnTemplate/base.html.twig" %}
+{% extends "base.html.twig" %}
 
 {% block title %}
     Puzzle - {{ parent() }}
@@ -10,15 +10,13 @@
 
         <div class="row">
             {% for daily in lastPhotos %}
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card">
-                        <a href="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': daily.unsplashPhoto.unsplashId}) }}">
-                            <img src="{{ daily.unsplashPhoto | unsplash_photo_block }}" alt="" class="card-img img-fluid">
-                            <div class="card-block">
-                                {{ daily.unsplashPhoto.unsplashUser.name }}
-                            </div>
-                        </a>
-                    </div>
+                <div class="col-lg-3 col-sm-6 my-2">
+                    <a href="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': daily.unsplashPhoto.unsplashId}) }}" class="card">
+                        <img src="{{ daily.unsplashPhoto | unsplash_photo_block }}" alt="" class="card-img img-fluid">
+                        <div class="card-body">
+                            {{ daily.unsplashPhoto.unsplashUser.name }}
+                        </div>
+                    </a>
                 </div>
             {% endfor %}
         </div>

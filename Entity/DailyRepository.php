@@ -47,9 +47,11 @@ class DailyRepository extends EntityRepository
         $qb = $this->createQueryBuilder('daily');
         $qb->where('daily.dateDaily > :mindate');
         $qb->andWhere('daily.dateDaily < :maxdate');
+
         $dateTime->modify('first day of this month');
         $dateTime->setTime(0, 0, 0);
         $qb->setParameter('mindate', $dateTime);
+
         $maxDate = clone $dateTime;
         $maxDate->modify('first day of next month');
         $qb->setParameter('maxdate', $maxDate);
