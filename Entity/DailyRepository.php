@@ -2,8 +2,9 @@
 
 namespace Disjfa\MozaicBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
 use DateTime;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * DailyRepository
@@ -25,7 +26,8 @@ class DailyRepository extends EntityRepository
 
     /**
      * @param DailyDateTime $dateTime
-     * @return mixed
+     * @return Daily|null
+     * @throws NonUniqueResultException
      */
     public function findDailyByDate(DailyDateTime $dateTime)
     {
@@ -34,6 +36,25 @@ class DailyRepository extends EntityRepository
         $qb->setParameter('date', (string)$dateTime);
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param DateTime $dateTime
+     * @return Daily[]
+     */
+    public function findByMonthAndYear(DateTime $dateTime)
+    {
+        $qb = $this->createQueryBuilder('daily');
+        $qb->where('daily.dateDaily > :mindate');
+        $qb->andWhere('daily.dateDaily < :maxdate');
+        $dateTime->modify('first day of this month');
+        $dateTime->setTime(0, 0, 0);
+        $qb->setParameter('mindate', $dateTime);
+        $maxDate = clone $dateTime;
+        $maxDate->modify('first day of next month');
+        $qb->setParameter('maxdate', $maxDate);
+
+        return $qb->getQuery()->getResult();
     }
 
 }

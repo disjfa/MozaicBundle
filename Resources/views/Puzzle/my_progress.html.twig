@@ -1,31 +1,31 @@
-{% extends "::base.html.twig" %}
+{% extends "@GlynnTemplate/base.html.twig" %}
 
 {% block title %}
     My progress - {{ parent() }}
 {% endblock %}
 
 {% block body %}
-    <h1>My progress</h1>
+    <div class="container">
+        <h1>My progress</h1>
 
-    <div class="row">
-        {% for userPhoto in userPhotos %}
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <a href="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': userPhoto.unsplashPhoto.unsplashId}) }}">
-                        <img src="{{ userPhoto.unsplashPhoto | unsplash_photo_block }}" alt="" class="card-img img-fluid">
-                        <div class="card-block">
-                            {{ userPhoto.unsplashPhoto.unsplashUser.name }}
-                            <br>
-                            <small>
-                                <i class="fa fa-calendar"></i>
-                                {{ userPhoto.dateFinished | date }}
-                            </small>
-                        </div>
-                    </a>
+        <div class="row">
+            {% for userPhoto in userPhotos %}
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card">
+                        <a href="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': userPhoto.unsplashPhoto.unsplashId}) }}">
+                            <img src="{{ userPhoto.unsplashPhoto | unsplash_photo_block }}" alt="" class="card-img img-fluid">
+                            <div class="card-block">
+                                {{ userPhoto.unsplashPhoto.unsplashUser.name }}
+                                <br>
+                                <small>
+                                    <i class="fa fa-calendar"></i>
+                                    {{ userPhoto.dateFinished | date }}
+                                </small>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
-
-

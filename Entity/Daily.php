@@ -28,6 +28,15 @@ class Daily
     }
 
     /**
+     * @return mixed
+     */
+    public function getDateDaily()
+    {
+        return $this->dateDaily;
+    }
+
+
+    /**
      * @return UnsplashPhoto
      */
     public function getUnsplashPhoto()

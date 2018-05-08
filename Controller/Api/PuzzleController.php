@@ -2,11 +2,9 @@
 
 namespace Disjfa\MozaicBundle\Controller\Api;
 
-use Crew\Unsplash\Exception as UnsplashException;
 use DateTime;
 use Disjfa\MozaicBundle\Entity\UnsplashPhoto;
 use Disjfa\MozaicBundle\Entity\UserPhoto;
-use Disjfa\MozaicBundle\Mozaic\MozaicPuzzle;
 use FOS\UserBundle\Model\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

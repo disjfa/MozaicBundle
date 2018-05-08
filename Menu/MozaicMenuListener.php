@@ -19,6 +19,7 @@ class MozaicMenuListener
             ])->setExtra('icon', 'fa-puzzle-piece');
             $mozaicMenu->addChild('Puzzles', ['route' => 'disjfa_mozaic_puzzle_index'])->setExtra('icon', 'fa-puzzle-piece');
             $mozaicMenu->addChild('Random', ['route' => 'disjfa_mozaic_puzzle_random'])->setExtra('icon', 'fa-random');
+            $mozaicMenu->addChild('Daily', ['route' => 'disjfa_mozaic_puzzle_daily'])->setExtra('icon', 'fa-calendar');
         } catch (RouteNotFoundException $e) {
             // routing.yml not set up
             return;
