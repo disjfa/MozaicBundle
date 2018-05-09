@@ -114,6 +114,12 @@ class UnsplashPhoto
     private $unsplashUser;
 
     /**
+     * @var UserPhoto[]
+     * @ORM\OneToMany(targetEntity="Disjfa\MozaicBundle\Entity\UserPhoto", mappedBy="unsplashPhoto")
+     */
+    private $userPhotos;
+
+    /**
      * UnsplashPhoto constructor.
      * @param UnsplashUser $unsplashUser
      * @param string $unsplashId
@@ -249,5 +255,13 @@ class UnsplashPhoto
     public function getUnsplashUser()
     {
         return $this->unsplashUser;
+    }
+
+    /**
+     * @return UserPhoto[]
+     */
+    public function getUserPhotos()
+    {
+        return $this->userPhotos;
     }
 }

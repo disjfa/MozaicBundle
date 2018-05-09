@@ -18,7 +18,8 @@ class MozaicAdminMenuListener
                 'label' => 'Mozaic puzzle',
                 'route' => 'disjfa_mozaic_puzzle_index'
             ])->setExtra('icon', 'fa-puzzle-piece');
-            $mozaicMenu->addChild('Puzzles', ['route' => 'disjfa_mozaic_admin_mozaic_index'])->setExtra('icon', 'fa-puzzle-piece');
+            $mozaicMenu->addChild('Daily', ['route' => 'disjfa_mozaic_admin_mozaic_daily'])->setExtra('icon', 'fa-calendar');
+            $mozaicMenu->addChild('All photos', ['route' => 'disjfa_mozaic_admin_mozaic_photos'])->setExtra('icon', 'fa-image');
         } catch (RouteNotFoundException $e) {
             // routing.yml not set up
             return;

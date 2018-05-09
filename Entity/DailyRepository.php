@@ -56,6 +56,8 @@ class DailyRepository extends EntityRepository
         $maxDate->modify('first day of next month');
         $qb->setParameter('maxdate', $maxDate);
 
+        $qb->orderBy('daily.dateDaily', 'desc');
+
         return $qb->getQuery()->getResult();
     }
 

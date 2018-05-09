@@ -1,7 +1,7 @@
 {% extends "admin.html.twig" %}
 
 {% block title %}
-    Puzzle - {{ parent() }}
+    Daily photos - {{ parent() }}
 {% endblock %}
 
 {% block page_title_text %}
@@ -25,12 +25,12 @@
         <div class="row">
             {% for item in daily %}
                 <div class="col-lg-3 py-2">
-                    <div class="card">
-                        <img src="{{ item.unsplashPhoto.urlRegular }}" alt="" class="card-img-top">
+                    <a href="{{ path('disjfa_mozaic_admin_mozaic_show', {'unsplashPhoto': item.unsplashPhoto.unsplashId}) }}" class="card">
+                        <img src="{{ item.unsplashPhoto | unsplash_photo_block }}" alt="" class="card-img-top">
                         <div class="card-body">
                             {{ item.dateDaily }}
                         </div>
-                    </div>
+                    </a>
                 </div>
             {% else %}
                 <div class="col-12 py-3">

@@ -1,0 +1,41 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col py-2">
+                <h4>Bio</h4>
+                <p>
+                    {{ unsplashPhoto.unsplashUser.bio }}
+                </p>
+                <h4>Finished</h4>
+                <ul>
+                    {% for userPhoto in unsplashPhoto.userPhotos %}
+                        <li>
+                            {{ userPhoto.dateFinished|date }}
+                        </li>
+                    {% else %}
+                        <li>
+                            <em>No one yet!</em>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ path('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}" class="btn btn-outline-primary">
+                    Check on site
+                </a>
+            </div>
+            <div class="col-12 col-md-8 py-2">
+                <img src="{{ unsplashPhoto.urlRegular }}" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_title_text %}
+    Photo by {{ unsplashPhoto.unsplashUser.name }}
+{% endblock %}
+
+{% block title %}
+    Photo by {{ unsplashPhoto.unsplashUser.name }} - {{ parent() }}
+{% endblock %}
+

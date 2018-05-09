@@ -21,7 +21,7 @@ class UserPhoto
 
     /**
      * @var UnsplashPhoto
-     * @ORM\ManyToOne(targetEntity="Disjfa\MozaicBundle\Entity\UnsplashPhoto")
+     * @ORM\ManyToOne(targetEntity="Disjfa\MozaicBundle\Entity\UnsplashPhoto", inversedBy="userPhotos")
      */
     private $unsplashPhoto;
 

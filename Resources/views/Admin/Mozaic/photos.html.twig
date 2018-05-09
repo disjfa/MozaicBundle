@@ -1,0 +1,32 @@
+{% extends "admin.html.twig" %}
+
+{% block title %}
+    All photos - {{ parent() }}
+{% endblock %}
+
+{% block page_title_text %}
+    All photos
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            {% for unsplashPhoto in unsplashPhotos %}
+                <div class="col-lg-3 py-2">
+                    <a href="{{ path('disjfa_mozaic_admin_mozaic_show', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}" class="card">
+                        <img src="{{ unsplashPhoto | unsplash_photo_block }}" alt="" class="card-img-top">
+                        <div class="card-body">
+                            {{ unsplashPhoto.unsplashUser.name }}
+                        </div>
+                    </a>
+                </div>
+            {% else %}
+                <div class="col-12 py-3">
+                    <div class="alert alert-info">
+                        No items found
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
