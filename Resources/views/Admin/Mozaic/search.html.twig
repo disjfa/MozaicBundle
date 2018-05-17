@@ -1,0 +1,38 @@
+{% extends 'admin.html.twig' %}
+
+{% trans_default_domain 'mozaic' %}
+
+{% block title %}
+    {{ 'admin.title.search' | trans | desc('Search for new images') }} - {{ parent() }}
+{% endblock %}
+
+{% block page_title_text %}
+    {{ 'admin.page_title.search' | trans | desc('Search for new images') }}
+{% endblock %}
+
+{% block body %}
+    <div class="bg-light py-3">
+        <div class="container">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            {{ form_rest(form) }}
+
+            <button type="submit" class="btn btn-primary">
+                {{ 'admin.label.search' | trans | desc('Search') }}
+            </button>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="container py-3">
+        {% if unsplashPhoto %}
+            <h4>
+                {{ unsplashPhoto.unsplashUser.name }}
+                <a href="{{ path('disjfa_mozaic_admin_mozaic_show', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}" class="btn btn-outline-primary">
+                    {{ 'admin.button.go_to_photo' | trans | desc('Go to photo') }}
+                </a>
+            </h4>
+            <img src="{{ unsplashPhoto.urlRegular }}" alt="" class="img-fluid">
+        {% endif %}
+    </div>
+{% endblock %}

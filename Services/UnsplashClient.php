@@ -53,6 +53,16 @@ class UnsplashClient
     }
 
     /**
+     * @param string $unsplashId
+     * @return UnsplashPhoto
+     */
+    public function find(string $unsplashId)
+    {
+        $photo = Photo::find($unsplashId);
+        return $this->updateOrInsertPhoto($photo);
+    }
+
+    /**
      * @param Photo $photo
      * @return UnsplashPhoto
      */
@@ -66,7 +76,7 @@ class UnsplashClient
 
         $unsplashPhoto = $this->entityManager->getRepository(UnsplashPhoto::class)->find($photo->id);
         if (null === $unsplashPhoto) {
-            $location = isset($photo->location) ?$photo->location : [];
+            $location = isset($photo->location) ? $photo->location : [];
             $unsplashPhoto = new UnsplashPhoto($unsplashUser, $photo->id, $photo->created_at, $photo->width, $photo->height, $photo->color, $photo->likes, $photo->urls, $photo->links, $location);
             $this->entityManager->persist($unsplashPhoto);
         }

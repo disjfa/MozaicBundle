@@ -3,10 +3,8 @@
 namespace Disjfa\MozaicBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Knp\Component\Pager\PaginatorInterface;
 
-/**
- * UnsplashPhotoRepository
- */
 class UnsplashPhotoRepository extends EntityRepository
 {
     /**
@@ -18,5 +16,11 @@ class UnsplashPhotoRepository extends EntityRepository
     public function find($id, $lockMode = NULL, $lockVersion = NULL)
     {
         return $this->findOneBy(['unsplashId' => $id]);
+    }
+
+    public function findAllPaginated(PaginatorInterface $paginator, $page = 1, $limit = 12)
+    {
+        $qb = $this->createQueryBuilder('u');
+        return $paginator->paginate($qb, $page, $limit);
     }
 }

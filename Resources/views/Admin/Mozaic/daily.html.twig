@@ -1,11 +1,13 @@
 {% extends "admin.html.twig" %}
 
+{% trans_default_domain 'mozaic' %}
+
 {% block title %}
-    Daily photos - {{ parent() }}
+    {{ 'admin.title.daily_photos' | trans | desc('Daily photos') }} - {{ parent() }}
 {% endblock %}
 
 {% block page_title_text %}
-    Daily photos
+    {{ 'admin.page_title.daily_photos' | trans | desc('Daily photos') }}
 {% endblock %}
 
 {% block body %}
@@ -15,7 +17,7 @@
             {{ form_rest(form) }}
             <div class="form-group">
                 <button type="submit" class="btn btn-secondary">
-                    Filter
+                    {{ 'admin.button.filter' | trans | desc('Filter') }}
                 </button>
             </div>
             {{ form_end(form) }}
@@ -35,7 +37,7 @@
             {% else %}
                 <div class="col-12 py-3">
                     <div class="alert alert-info">
-                        No items found
+                        {{ 'admin.label.No_items_found' | trans | desc('No items found') }}
                     </div>
                 </div>
             {% endfor %}
