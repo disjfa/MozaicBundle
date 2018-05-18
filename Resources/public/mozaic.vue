@@ -166,13 +166,13 @@
         position: absolute;
         cursor: pointer;
         transition: .1s;
-        z-index: 1000;
+        z-index: 500;
     }
 
     .mozaic-piece.active {
         box-shadow: 0 0 20px #000;
         transform: scale(1.1);
-        z-index: 1010;
+        z-index: 510;
     }
 
     .mozaic-body .close {

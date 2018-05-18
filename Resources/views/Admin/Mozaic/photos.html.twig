@@ -25,7 +25,7 @@
     <div class="container pb-3">
         <div class="row">
             {% for unsplashPhoto in unsplashPhotos %}
-                <div class="col-lg-3 py-2">
+                <div class="col-lg-3 col-sm-6 py-2">
                     <a href="{{ path('disjfa_mozaic_admin_mozaic_show', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}" class="card">
                         <img src="{{ unsplashPhoto | unsplash_photo_block }}" alt="" class="card-img-top">
                         <div class="card-body">
