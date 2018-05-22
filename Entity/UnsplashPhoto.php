@@ -1,7 +1,11 @@
 <?php
+
 namespace Disjfa\MozaicBundle\Entity;
 
+use App\Entity\User;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -114,10 +118,16 @@ class UnsplashPhoto
     private $unsplashUser;
 
     /**
-     * @var UserPhoto[]
+     * @var UserPhoto[]|ArrayCollection
      * @ORM\OneToMany(targetEntity="Disjfa\MozaicBundle\Entity\UserPhoto", mappedBy="unsplashPhoto")
      */
     private $userPhotos;
+
+    /**
+     * @var UserLike[]|ArrayCollection
+     * @ORM\OneToMany(targetEntity="Disjfa\MozaicBundle\Entity\UserLike", mappedBy="unsplashPhoto")
+     */
+    private $userLikes;
 
     /**
      * UnsplashPhoto constructor.
@@ -141,29 +151,29 @@ class UnsplashPhoto
         $this->color = $color;
         $this->likes = $likes;
 
-        if(array_key_exists('raw', $urls)) {
+        if (array_key_exists('raw', $urls)) {
             $this->urlRaw = $urls['raw'];
         }
-        if(array_key_exists('regular', $urls)) {
+        if (array_key_exists('regular', $urls)) {
             $this->urlRegular = $urls['regular'];
         }
-        if(array_key_exists('html', $links)) {
+        if (array_key_exists('html', $links)) {
             $this->linkHtml = $links['html'];
         }
 
-        if(array_key_exists('title', $location)) {
+        if (array_key_exists('title', $location)) {
             $this->title = $location['title'];
         }
-        if(array_key_exists('name', $location)) {
+        if (array_key_exists('name', $location)) {
             $this->name = $location['name'];
         }
-        if(array_key_exists('city', $location)) {
+        if (array_key_exists('city', $location)) {
             $this->city = $location['city'];
         }
-        if(array_key_exists('country', $location)) {
+        if (array_key_exists('country', $location)) {
             $this->country = $location['country'];
         }
-        if(array_key_exists('position', $location)) {
+        if (array_key_exists('position', $location)) {
             $this->latitude = $location['position']['latitude'];
             $this->longitude = $location['position']['longitude'];
         }
@@ -263,5 +273,45 @@ class UnsplashPhoto
     public function getUserPhotos()
     {
         return $this->userPhotos;
+    }
+
+    /**
+     * @param int $userId
+     * @return UserPhoto[]
+     */
+    public function getUserPhotoByUser(int $userId)
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('userId', $userId));
+
+        return $this->userPhotos->matching($criteria);
+    }
+
+    /**
+     * @param int $userId
+     * @return UserLike
+     */
+    public function getLikeByUser(int $userId)
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('userId', $userId));
+        $criteria->getFirstResult(true);
+
+        return $this->userLikes->matching($criteria)->current();
+    }
+
+    public function getLikeCount()
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('liked', true));
+
+        return $this->userLikes->matching($criteria)->count();
+    }
+    public function getUnlikeCount()
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('liked', false));
+
+        return $this->userLikes->matching($criteria)->count();
     }
 }

@@ -1,5 +1,7 @@
 {% extends "base.html.twig" %}
 
+{% trans_default_domain 'mozaic' %}
+
 {% block meta %}
     {{ parent() }}
     <meta property="og:type" content="puzzle"/>
@@ -16,7 +18,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container py-3">
         <h1>Mozaic by dimme</h1>
 
         <div class="row">
@@ -35,8 +37,35 @@
                 <hr>
                 All photos are on <a href="https://unsplash.com/">Unsplash</a>
                 <hr>
-                <a href="{{ path('disjfa_mozaic_puzzle_random') }}">Random new photo</a>
-
+                <div class="btn-group">
+                    <a href="{{ path('disjfa_mozaic_puzzle_photo_like', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}" class="btn{% if myLike and myLike.liked %} btn-info{% else %} btn-outline-info{% endif %}">
+                        <i class="fas fa-thumbs-up"></i>
+                        {{ unsplashPhoto.likeCount }}
+                    </a>
+                    <a href="{{ path('disjfa_mozaic_puzzle_photo_unlike', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}" class="btn{% if myLike and myLike.liked == false %} btn-info{% else %} btn-outline-info{% endif %}">
+                        <i class="fas fa-thumbs-down"></i>
+                        {{ unsplashPhoto.unlikeCount }}
+                    </a>
+                </div>
+                <hr>
+                <a href="{{ path('disjfa_mozaic_puzzle_random') }}">
+                    <i class="fas fa-random"></i>
+                    {{ 'site.button.random_new_photo' | trans | desc('Random new photo') }}
+                </a>
+                {% if app.user %}
+                    <hr>
+                    {% if myPhotos | length %}
+                        <div class="text-success">
+                            <i class="fas fa-check"></i>
+                            {{ 'mozaic.title.you_have_finished_this_image' | trans | desc('Finished!') }}
+                        </div>
+                    {% else %}
+                        <div class="text-black-50">
+                            <i class="fas fa-minus"></i>
+                            {{ 'mozaic.title.you_have_not_finished_this_image' | trans | desc('Not finished') }}
+                        </div>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>

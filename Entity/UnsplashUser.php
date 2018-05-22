@@ -1,7 +1,6 @@
 <?php
 namespace Disjfa\MozaicBundle\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
