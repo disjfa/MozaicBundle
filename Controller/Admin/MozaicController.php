@@ -8,15 +8,12 @@ use Disjfa\MozaicBundle\Entity\UnsplashPhoto;
 use Disjfa\MozaicBundle\Form\Type\AdminDateType;
 use Disjfa\MozaicBundle\Form\Type\SearchType;
 use Disjfa\MozaicBundle\Services\UnsplashClient;
-use Knp\Component\Pager\Pagination\PaginationInterface;
-use Knp\Component\Pager\Pagination\SlidingPagination;
 use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @Route("/admin/mozaic")
@@ -100,7 +97,7 @@ class MozaicController extends Controller
 
     /**
      * @Route("/show/{unsplashPhoto}", name="disjfa_mozaic_admin_mozaic_show")
-     * @param Request $request
+     * @param UnsplashPhoto $unsplashPhoto
      * @return Response
      */
     public function showAction(UnsplashPhoto $unsplashPhoto)

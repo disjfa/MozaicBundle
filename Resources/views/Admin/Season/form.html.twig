@@ -1,0 +1,35 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}
+    {{ 'admin.title.season_create' | trans | desc('Seasons form') }} - {{ parent() }}
+{% endblock %}
+
+{% block page_title_text %}
+    {{ 'admin.page_title.season_create' | trans | desc('Seasons form') }}
+{% endblock %}
+
+{% block body %}
+    <div class="container py-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('disjfa_mozaic_admin_season_index') }}">
+                        {{ 'admin.breadcrumb.season_index' | trans | desc('Seasons') }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ 'admin.breadcrumb.season_form' | trans | desc('Edit') }}
+                </li>
+            </ol>
+        </nav>
+
+        {{ form_start(form) }}
+        {{ form_rest(form) }}
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i>
+            {{ 'admin.season.button.save_season' | trans | desc('Save season') }}
+        </button>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

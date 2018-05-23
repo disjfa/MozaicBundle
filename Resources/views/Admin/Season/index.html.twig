@@ -1,0 +1,35 @@
+{% extends "admin.html.twig" %}
+
+{% trans_default_domain 'mozaic' %}
+
+{% block title %}
+    {{ 'admin.title.season_index' | trans | desc('Seasons') }} - {{ parent() }}
+{% endblock %}
+
+{% block page_title_text %}
+    {{ 'admin.page_title.season_index' | trans | desc('Seasons') }}
+{% endblock %}
+
+{% block body %}
+    <div class="container py-3">
+        <a href="{{ path('disjfa_mozaic_admin_season_create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            {{ 'admin.button.create_season' | trans | desc('Create season') }}
+        </a>
+
+        {% for season in seasons %}
+            <div>
+                <h3>
+                    <a href="{{ path('disjfa_mozaic_admin_season_show', {'unsplashSeason': season.id}) }}">
+                        {{ season.title }}
+                    </a>
+                </h3>
+                <p>
+                    {{ season.description }}
+                </p>
+                {{ season.dateSeason | date }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

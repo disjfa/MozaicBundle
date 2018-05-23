@@ -1,0 +1,67 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}
+    {{ unsplashSeason.title }} - {{ parent() }}
+{% endblock %}
+
+{% block page_title_text %}
+    {{ unsplashSeason.title }}
+{% endblock %}
+
+{% block body %}
+    <div class="container py-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('disjfa_mozaic_admin_season_index') }}">
+                        {{ 'admin.breadcrumb.season_index' | trans | desc('Seasons') }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ unsplashSeason.title }}</li>
+            </ol>
+        </nav>
+        <h1>
+            {{ unsplashSeason.title }}
+            <a href="{{ path('disjfa_mozaic_admin_season_edit', {'unsplashSeason': unsplashSeason.id}) }}" class="btn btn-outline-primary">
+                <i class="fas fa-edit"></i>
+                {{ 'admin.button.edit_season' | trans | desc('Edit season') }}
+            </a>
+        </h1>
+        <p>
+            {{ unsplashSeason.description }}
+        </p>
+        {{ unsplashSeason.dateSeason | date }}
+        <hr>
+        <h3>Items</h3>
+        {% for item in unsplashSeason.items %}
+            <div class="row py-2">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ item.unsplashPhoto | unsplash_photo_block }}" alt="{{ item.title }}" class="img-fluid card-img">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h3>{{ item.title }}</h3>
+                    <p>
+                        {{ item.description }}
+                    </p>
+                    <p>{{ item.unsplashPhoto.userPhotos | length }}</p>
+                    <div class="btn-group">
+                        <a href="{{ path('disjfa_mozaic_admin_mozaic_show', {'unsplashPhoto': item.unsplashPhoto.unsplashId }) }}" class="btn btn-outline-primary">
+                            {{ 'admin.button.show_photo' | trans | desc('Show photo') }}
+                        </a>
+                        <a href="{{ path('disjfa_mozaic_admin_season_item_edit', {'unsplashSeasonItem': item.id }) }}" class="btn btn-outline-primary">
+                            {{ 'admin.button.edit_season_item' | trans | desc('Edit item') }}
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+        <hr>
+        <a href="{{ path('disjfa_mozaic_admin_season_item_create', {'unsplashSeason': unsplashSeason.id}) }}" class="btn btn-outline-primary">
+            <i class="fas fa-plus"></i>
+            {{ 'admin.button.season_add_item' | trans | desc('Add item') }}
+        </a>
+    </div>
+{% endblock %}

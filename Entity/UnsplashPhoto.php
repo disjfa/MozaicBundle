@@ -77,6 +77,12 @@ class UnsplashPhoto
 
     /**
      * @var string
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
      * @ORM\Column(name="name", type="string", nullable=true)
      */
     private $name;
@@ -141,7 +147,7 @@ class UnsplashPhoto
      * @param array $urls
      * @param array $links
      */
-    public function __construct(UnsplashUser $unsplashUser, $unsplashId, $createdAt, $width, $height, $color, $likes, array $urls, array $links, array $location)
+    public function __construct(UnsplashUser $unsplashUser, $unsplashId, $description, $createdAt, $width, $height, $color, $likes, array $urls, array $links, array $location)
     {
         $this->unsplashUser = $unsplashUser;
         $this->unsplashId = $unsplashId;
@@ -177,6 +183,11 @@ class UnsplashPhoto
             $this->latitude = $location['position']['latitude'];
             $this->longitude = $location['position']['longitude'];
         }
+    }
+
+    public function __toString()
+    {
+        return $this->unsplashId . ' - ' . $this->description . $this->unsplashUser->getName();
     }
 
     /**
@@ -295,7 +306,7 @@ class UnsplashPhoto
     {
         $criteria = Criteria::create();
         $criteria->where(Criteria::expr()->eq('userId', $userId));
-        $criteria->getFirstResult(true);
+        $criteria->setFirstResult(1);
 
         return $this->userLikes->matching($criteria)->current();
     }
@@ -307,6 +318,7 @@ class UnsplashPhoto
 
         return $this->userLikes->matching($criteria)->count();
     }
+
     public function getUnlikeCount()
     {
         $criteria = Criteria::create();
