@@ -36,9 +36,9 @@
         {% for item in unsplashSeason.items %}
             <div class="row py-2">
                 <div class="col-md-4">
-                    <div class="card">
+                    <a href="{{ path('disjfa_mozaic_admin_season_item_edit', {'unsplashSeasonItem': item.id }) }}" class="card">
                         <img src="{{ item.unsplashPhoto | unsplash_photo_block }}" alt="{{ item.title }}" class="img-fluid card-img">
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-8">
                     <h3>{{ item.title }}</h3>

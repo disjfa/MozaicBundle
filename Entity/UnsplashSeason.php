@@ -67,7 +67,7 @@ class UnsplashSeason
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
@@ -75,7 +75,7 @@ class UnsplashSeason
     /**
      * @param string $title
      */
-    public function setTitle(string $title): void
+    public function setTitle($title): void
     {
         $this->title = $title;
     }

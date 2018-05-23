@@ -73,7 +73,7 @@ class UnsplashSeasonItem
     /**
      * @param string $title
      */
-    public function setTitle(string $title): void
+    public function setTitle($title): void
     {
         $this->title = $title;
     }
