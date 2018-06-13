@@ -82,7 +82,7 @@ class SeasonController extends Controller
             $entityManager->persist($unsplashSeason);
             $entityManager->flush();
 
-            $this->addFlash('success', 'admin.flash.season_saved', [], 'mozaic');
+            $this->addFlash('success', $this->translator->trans('admin.flash.season_saved', [], 'mozaic'));
 
             return $this->redirectToRoute('disjfa_mozaic_admin_season_show', [
                 'unsplashSeason' => $unsplashSeason->getId(),
