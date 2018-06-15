@@ -19,7 +19,27 @@
 
 {% block body %}
     <div class="container py-3">
-        <h1>{{ 'site.title.mozaic' | trans | desc('Mozaic by dimme') }}</h1>
+        {% if unsplashSeason is defined %}
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('disjfa_mozaic_season_show', {'unsplashSeason': unsplashSeason.id}) }}">
+                            {{ unsplashSeason.title }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ unsplashSeasonItem.title }}
+                    </li>
+                </ol>
+            </nav>
+            {% if app.user == false %}
+                <div class="alert alert-warning mt-3">
+                    <strong>You are not logged in!</strong> You can play all puzzles but we do not log progress.
+                </div>
+            {% endif %}
+        {% else %}
+            <h1>{{ 'site.title.mozaic' | trans | desc('Mozaic by dimme') }}</h1>
+        {% endif %}
 
         <div class="row">
             <div class="col-xl-10 col-xs-12">

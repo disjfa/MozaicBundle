@@ -13,6 +13,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use FOS\UserBundle\Model\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -130,10 +131,11 @@ class PuzzleController extends Controller
     /**
      * @Route("/{unsplashPhoto}/like", name="disjfa_mozaic_puzzle_photo_like")
      * @param UnsplashPhoto $unsplashPhoto
+     * @param Request $request
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function likeAction(UnsplashPhoto $unsplashPhoto)
+    public function likeAction(UnsplashPhoto $unsplashPhoto, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -150,17 +152,23 @@ class PuzzleController extends Controller
 
         $this->addFlash('success', $this->translator->trans('mozaic.liked.message', [], 'mozaic'));
 
+        if($request->headers->has('referer')) {
+            return $this->redirect($request->headers->get('referer'));
+        }
+
         return $this->redirectToRoute('disjfa_mozaic_puzzle_photo', [
             'unsplashPhoto' => $unsplashPhoto->getUnsplashId()
         ]);
     }
+
     /**
      * @Route("/{unsplashPhoto}/unlike", name="disjfa_mozaic_puzzle_photo_unlike")
      * @param UnsplashPhoto $unsplashPhoto
+     * @param Request $request
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function unlikeAction(UnsplashPhoto $unsplashPhoto)
+    public function unlikeAction(UnsplashPhoto $unsplashPhoto, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -176,6 +184,10 @@ class PuzzleController extends Controller
         $entityManager->flush();
 
         $this->addFlash('success', $this->translator->trans('mozaic.unliked.message', [], 'mozaic'));
+
+        if($request->headers->has('referer')) {
+            return $this->redirect($request->headers->get('referer'));
+        }
 
         return $this->redirectToRoute('disjfa_mozaic_puzzle_photo', [
             'unsplashPhoto' => $unsplashPhoto->getUnsplashId()

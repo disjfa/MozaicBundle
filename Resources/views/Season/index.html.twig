@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Seasons - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% for season in seasons %}
+        {% if loop.first %}
+            <div class="bg-primary text-white py-5">
+                <div class="container">
+                    <h1>{{ season.title }}</h1>
+                    {{ season.dateSeason | date }}
+                    <p>
+                        {{ season.description }}
+                    </p>
+                    <a href="{{ path('disjfa_mozaic_season_show', {'unsplashSeason': season.id} ) }}" class="btn btn-success">
+                        <i class="fas fa-dice"></i>
+                        Go to season
+                    </a>
+                    <a href="{{ path('disjfa_mozaic_season_show', {'unsplashSeason': season.id} ) }}" class="row pt-3">
+                        {% for item in season.items |slice(0, 3) %}
+                            <div class="col-sm pb-2">
+                                <img src="{{ item.unsplashPhoto | unsplash_photo_block }}" alt="{{ item.title }}" class="img-fluid card-img">
+                            </div>
+                        {% endfor %}
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div class="{% if loop.index is odd %}bg-light{% endif %}">
+                <div class="container py-3">
+                    <h4>{{ season.title }}</h4>
+                    {{ season.dateSeason | date }}
+                    <p>
+                        {{ season.description }}
+                    </p>
+                    <a href="{{ path('disjfa_mozaic_season_show', {'unsplashSeason': season.id} ) }}" class="btn btn-primary">
+                        <i class="fas fa-dice"></i>
+                        Go to season
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endblock %}
+

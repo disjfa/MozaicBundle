@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Seasons - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="bg-primary text-white py-5">
+        <div class="container">
+            <h1>{{ unsplashSeason.title }}</h1>
+            {{ unsplashSeason.dateSeason | date }}
+            <p>{{ unsplashSeason.description }}</p>
+        </div>
+    </div>
+    <div class="container">
+        {% if app.user == false %}
+            <div class="alert alert-warning mt-3">
+                <strong>You are not logged in!</strong> You can play all puzzles but we do not log progress.
+            </div>
+        {% endif %}
+
+        {% for item in unsplashSeason.items %}
+            {% if loop.first %}
+                <br>
+            {% else %}
+                <hr>
+            {% endif %}
+            <div class="row">
+                <a href="{{ path('disjfa_mozaic_season_item', {'unsplashSeason': unsplashSeason.id, 'unsplashSeasonItem': item.id}) }}" class="col-md">
+                    <img src="{{ item.unsplashPhoto | unsplash_photo_block }}" alt="{{ item.title }}" class="img-fluid card-img">
+                </a>
+                <div class="col-md-8">
+                    <h3>
+                        {{ item.title }}
+                    </h3>
+                    {% if app.user %}
+                        {% if item.unsplashPhoto.userPhotoByUser(app.user.id) | length %}
+                            <div class="text-success">
+                                <i class="fas fa-check"></i> Finished
+                            </div>
+                        {% else %}
+                            <div class="text-black-50">
+                                <i class="fas fa-minus "></i> To do
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <p>
+                        {{ item.description }}
+                    </p>
+                    <a href="{{ path('disjfa_mozaic_season_item', {'unsplashSeason': unsplashSeason.id, 'unsplashSeasonItem': item.id}) }}" class="btn btn-primary">
+                        <i class="fas fa-puzzle-piece"></i>
+                        Play puzzle
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
