@@ -19,7 +19,7 @@
                         Go to season
                     </a>
                     <a href="{{ path('disjfa_mozaic_season_show', {'unsplashSeason': season.id} ) }}" class="row pt-3">
-                        {% for item in season.items |slice(0, 3) %}
+                        {% for item in season.items | slice(0, 3) %}
                             <div class="col-sm pb-2">
                                 <img src="{{ item.unsplashPhoto | unsplash_photo_block }}" alt="{{ item.title }}" class="img-fluid card-img">
                             </div>

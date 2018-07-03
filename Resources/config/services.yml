@@ -1,44 +1,48 @@
 parameters:
-  disjfa_mozaic.unsplash.application_id: ''
-  disjfa_mozaic.unsplash.secret: ''
+    disjfa_mozaic.unsplash.application_id: ''
+    disjfa_mozaic.unsplash.secret: ''
 
 services:
-  _defaults:
-    autowire: true
-    autoconfigure: true
-    public: false
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
 
-  # makes classes in src/ available to be used as services
-  # this creates a service per class whose id is the fully-qualified class name
-  Disjfa\MozaicBundle\:
-      resource: '../../*'
-      exclude: '../../{Entity,Migrations,Tests}'
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    Disjfa\MozaicBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Migrations,Tests}'
 
-  # controllers are imported separately to make sure services can be injected
-  # as action arguments even if you don't extend any base controller class
-  Disjfa\MozaicBundle\Controller\:
-      resource: '../../Controller'
-      tags: ['controller.service_arguments']
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    Disjfa\MozaicBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
 
-  Disjfa\MozaicBundle\Menu\MozaicMenuListener:
-    class: Disjfa\MozaicBundle\Menu\MozaicMenuListener
-    tags:
-      - { name: 'kernel.event_listener', event: 'glynn_site.menu_configure', method: 'onMenuConfigure' }
+    Disjfa\MozaicBundle\Menu\MozaicMenuListener:
+        class: Disjfa\MozaicBundle\Menu\MozaicMenuListener
+        tags:
+            - { name: 'kernel.event_listener', event: 'glynn_site.menu_configure', method: 'onMenuConfigure' }
 
-  Disjfa\MozaicBundle\Menu\MozaicAdminMenuListener:
-    class: Disjfa\MozaicBundle\Menu\MozaicAdminMenuListener
-    tags:
-      - { name: 'kernel.event_listener', event: 'glynn_admin.menu_configure', method: 'onMenuConfigure' }
+    Disjfa\MozaicBundle\Menu\MozaicAdminMenuListener:
+        class: Disjfa\MozaicBundle\Menu\MozaicAdminMenuListener
+        tags:
+            - { name: 'kernel.event_listener', event: 'glynn_admin.menu_configure', method: 'onMenuConfigure' }
 
-  Disjfa\MozaicBundle\Services\UnsplashClient:
-    class: Disjfa\MozaicBundle\Services\UnsplashClient
-    arguments:
-      - '%disjfa_mozaic.unsplash.application_id%'
-      - '%disjfa_mozaic.unsplash.secret%'
-      - '@router'
-      - '@doctrine.orm.entity_manager'
+    Disjfa\MozaicBundle\Services\UnsplashClient:
+        class: Disjfa\MozaicBundle\Services\UnsplashClient
+        arguments:
+            - '%disjfa_mozaic.unsplash.application_id%'
+            - '%disjfa_mozaic.unsplash.secret%'
+            - '@router'
+            - '@doctrine.orm.entity_manager'
 
-  Disjfa\MozaicBundle\Twig\UnsplashExtension:
-    class: Disjfa\MozaicBundle\Twig\UnsplashExtension
-    tags:
-        - { name: twig.extension }
+    Disjfa\MozaicBundle\Twig\UnsplashExtension:
+        class: Disjfa\MozaicBundle\Twig\UnsplashExtension
+        tags:
+            - { name: twig.extension }
+
+    Disjfa\MozaicBundle\Security\:
+        resource: './../../Security/*'
+        tags: ['security.voter']

@@ -18,16 +18,27 @@
         </a>
 
         {% for season in seasons %}
+            <hr>
             <div>
                 <h3>
                     <a href="{{ path('disjfa_mozaic_admin_season_show', {'unsplashSeason': season.id}) }}">
                         {{ season.title }}
+                        {% if season.public %}
+                            <i class="fas fa-check"></i>
+                        {% endif %}
                     </a>
                 </h3>
+                <small>{{ season.dateSeason | date }} | <span class="badge badge-info">{{ season.items | length }}</span></small>
                 <p>
                     {{ season.description }}
                 </p>
-                {{ season.dateSeason | date }}
+                <a href="{{ path('disjfa_mozaic_admin_season_show', {'unsplashSeason': season.id}) }}" class="row">
+                    {% for item in season.items | slice(0, 3) %}
+                        <div class="col-sm pb-2">
+                            <img src="{{ item.unsplashPhoto | unsplash_photo_block }}" alt="{{ item.title }}" class="img-fluid card-img">
+                        </div>
+                    {% endfor %}
+                </a>
             </div>
         {% endfor %}
     </div>

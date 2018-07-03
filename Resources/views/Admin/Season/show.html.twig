@@ -22,10 +22,16 @@
         </nav>
         <h1>
             {{ unsplashSeason.title }}
-            <a href="{{ path('disjfa_mozaic_admin_season_edit', {'unsplashSeason': unsplashSeason.id}) }}" class="btn btn-outline-primary">
-                <i class="fas fa-edit"></i>
-                {{ 'admin.button.edit_season' | trans | desc('Edit season') }}
-            </a>
+            <div class="btn-group">
+                <a href="{{ path('disjfa_mozaic_admin_season_edit', {'unsplashSeason': unsplashSeason.id}) }}" class="btn btn-outline-primary">
+                    <i class="fas fa-edit"></i>
+                    {{ 'admin.button.edit_season' | trans | desc('Edit season') }}
+                </a>
+                <a href="{{ path('disjfa_mozaic_season_show', {'unsplashSeason': unsplashSeason.id}) }}" class="btn btn-outline-primary">
+                    <i class="fas fa-paper-plane"></i>
+                    {{ 'admin.button.show_on_site' | trans | desc('Show on site') }}
+                </a>
+            </div>
         </h1>
         <p>
             {{ unsplashSeason.description }}

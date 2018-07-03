@@ -1,5 +1,7 @@
 {% extends "base.html.twig" %}
 
+{% trans_default_domain 'mozaic' %}
+
 {% block title %}
     Seasons - {{ parent() }}
 {% endblock %}
@@ -10,6 +12,13 @@
             <h1>{{ unsplashSeason.title }}</h1>
             {{ unsplashSeason.dateSeason | date }}
             <p>{{ unsplashSeason.description }}</p>
+
+            {% if is_granted('edit', unsplashSeason) %}
+                <a href="{{ path('disjfa_mozaic_admin_season_show', {'unsplashSeason': unsplashSeason.id}) }}" class="btn btn-outline-light">
+                    <i class="fas fa-edit"></i>
+                    {{ 'button.edit-season' | trans | desc('Edit season') }}
+                </a>
+            {% endif %}
         </div>
     </div>
     <div class="container">

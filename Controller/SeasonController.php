@@ -31,6 +31,8 @@ class SeasonController extends Controller
      */
     public function showAction(UnsplashSeason $unsplashSeason)
     {
+        $this->denyAccessUnlessGranted('view', $unsplashSeason);
+
         return $this->render('@DisjfaMozaic/Season/show.html.twig', [
             'unsplashSeason' => $unsplashSeason,
         ]);
