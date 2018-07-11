@@ -47,10 +47,11 @@ class UnsplashSeasonItem
      */
     private $unsplashSeason;
 
-    public function __construct(UnsplashSeason $unsplashSeason)
+    public function __construct(UnsplashSeason $unsplashSeason, UnsplashPhoto $unsplashPhoto)
     {
         $this->seqnr = 50;
         $this->unsplashSeason = $unsplashSeason;
+        $this->unsplashPhoto = $unsplashPhoto;
         $this->title = '';
     }
 

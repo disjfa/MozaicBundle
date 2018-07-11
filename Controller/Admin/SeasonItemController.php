@@ -39,18 +39,6 @@ class SeasonItemController extends Controller
     }
 
     /**
-     * @Route("/create/{unsplashSeason}", name="disjfa_mozaic_admin_season_item_create")
-     * @param Request $request
-     * @param UnsplashSeason $unsplashSeason
-     * @return Response
-     */
-    public function createAction(Request $request, UnsplashSeason $unsplashSeason)
-    {
-        $unsplashSeasonItem = new UnsplashSeasonItem($unsplashSeason);
-        return $this->handleForm($request, $unsplashSeasonItem);
-    }
-
-    /**
      * @param Request $request
      * @param UnsplashSeasonItem $unsplashSeasonItem
      * @return Response

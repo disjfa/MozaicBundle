@@ -2,9 +2,7 @@
 
 namespace Disjfa\MozaicBundle\Form\Type;
 
-use Disjfa\MozaicBundle\Entity\UnsplashPhoto;
 use Disjfa\MozaicBundle\Entity\UnsplashSeasonItem;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -35,12 +33,6 @@ class AdminSeasonItemType extends AbstractType
 
         $builder->add('seqnr', NumberType::class, [
             'label' => 'form.admin.season_item.label.seqnr',
-        ]);
-
-        $builder->add('unsplashPhoto', EntityType::class, [
-            'class' => UnsplashPhoto::class,
-            'label' => 'form.admin.season_item.label.unsplashPhoto',
-            'required' => false,
         ]);
     }
 

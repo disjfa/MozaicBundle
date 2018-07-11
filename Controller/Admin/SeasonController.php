@@ -3,7 +3,11 @@
 namespace Disjfa\MozaicBundle\Controller\Admin;
 
 use Disjfa\MozaicBundle\Entity\UnsplashSeason;
+use Disjfa\MozaicBundle\Entity\UnsplashSeasonItem;
 use Disjfa\MozaicBundle\Form\Type\AdminSeasonType;
+use Disjfa\MozaicBundle\Form\Type\SearchType;
+use Disjfa\MozaicBundle\Services\UnsplashClient;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +23,15 @@ class SeasonController extends Controller
      * @var TranslatorInterface
      */
     private $translator;
+    /**
+     * @var UnsplashClient
+     */
+    private $unsplashClient;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, UnsplashClient $unsplashClient)
     {
         $this->translator = $translator;
+        $this->unsplashClient = $unsplashClient;
     }
 
     /**
@@ -40,10 +49,32 @@ class SeasonController extends Controller
      * @param UnsplashSeason $unsplashSeason
      * @return Response
      */
-    public function showAction(UnsplashSeason $unsplashSeason)
+    public function showAction(Request $request, UnsplashSeason $unsplashSeason)
     {
+        $form = $this->createForm(SearchType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $unsplashId = $form->get('unsplashId')->getData();
+
+            try {
+                $unsplashPhoto = $this->unsplashClient->find($unsplashId);
+                $unsplashSeasonItem = new UnsplashSeasonItem($unsplashSeason, $unsplashPhoto);
+
+                $this->getDoctrine()->getManager()->persist($unsplashSeasonItem);
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success', 'Photo added');
+                return $this->redirectToRoute('disjfa_mozaic_admin_season_item_edit', [
+                    'unsplashSeasonItem' => $unsplashSeasonItem->getId()
+                ]);
+            } catch (Exception $e) {
+                $this->addFlash('warning', $e->getMessage());
+            }
+        }
+
         return $this->render('@DisjfaMozaic/Admin/Season/show.html.twig', [
             'unsplashSeason' => $unsplashSeason,
+            'form' => $form->createView(),
         ]);
     }
 

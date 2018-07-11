@@ -58,6 +58,11 @@ class UnsplashClient
      */
     public function find(string $unsplashId)
     {
+        $unsplashPhoto = $this->entityManager->getRepository(UnsplashPhoto::class)->find($unsplashId);
+        if($unsplashPhoto instanceof UnsplashPhoto) {
+            return $unsplashPhoto;
+        }
+
         $photo = Photo::find($unsplashId);
         return $this->updateOrInsertPhoto($photo);
     }

@@ -45,8 +45,15 @@
             <div class="col-xl-10 col-xs-12">
                 <mozaic unsplash-route="{{ path('disjfa_mozaic_api_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}" token="{{ csrf_token(unsplashPhoto.id) }}" finish-route="{{ path('disjfa_mozaic_api_puzzle_finish', {'unsplashPhoto': unsplashPhoto.unsplashId}) }}"></mozaic>
                 <hr>
-                {#<h3>Share</h3>#}
-                {#<addthis></addthis>#}
+                <div class="btn-group">
+                    <div class="btn disabled">Share:</div>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) | url_encode }}" class="btn btn-outline-primary">
+                        <i class="fab fa-fw fa-facebook-f"></i>
+                    </a>
+                    <a href="https://twitter.com/home?status={{ url('disjfa_mozaic_puzzle_photo', {'unsplashPhoto': unsplashPhoto.unsplashId}) | url_encode }}" class="btn btn-outline-primary">
+                        <i class="fab fa-fw fa-twitter"></i>
+                    </a>
+                </div>
                 <br>
             </div>
             <div class="col-xl-2 col-xs-12">

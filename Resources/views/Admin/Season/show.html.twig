@@ -37,9 +37,26 @@
             {{ unsplashSeason.description }}
         </p>
         {{ unsplashSeason.dateSeason | date }}
-        <hr>
+    </div>
+    <div class="bg-light py-3">
+        <div class="container">
+            <h3>Add item</h3>
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            {{ form_rest(form) }}
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                {{ 'admin.label.search_and_add' | trans | desc('Search and add') }}
+            </button>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="container py-3">
         <h3>Items</h3>
         {% for item in unsplashSeason.items %}
+            <hr>
             <div class="row py-2">
                 <div class="col-md-4">
                     <a href="{{ path('disjfa_mozaic_admin_season_item_edit', {'unsplashSeasonItem': item.id }) }}" class="card">
@@ -47,11 +64,18 @@
                     </a>
                 </div>
                 <div class="col-md-8">
-                    <h3>{{ item.title }}</h3>
+                    <h3 class="mb-0">{{ item.title }}</h3>
+                    <div class="bg-light py-1 px-1">
+                        <small>
+                            {{ item.unsplashPhoto.userPhotos | length }} Done
+                            /
+                            {{ item.seqnr }} Seqnr
+                        </small>
+                    </div>
                     <p>
                         {{ item.description }}
                     </p>
-                    <p>{{ item.unsplashPhoto.userPhotos | length }}</p>
+
                     <div class="btn-group">
                         <a href="{{ path('disjfa_mozaic_admin_mozaic_show', {'unsplashPhoto': item.unsplashPhoto.unsplashId }) }}" class="btn btn-outline-primary">
                             {{ 'admin.button.show_photo' | trans | desc('Show photo') }}
@@ -60,14 +84,8 @@
                             {{ 'admin.button.edit_season_item' | trans | desc('Edit item') }}
                         </a>
                     </div>
-
                 </div>
             </div>
         {% endfor %}
-        <hr>
-        <a href="{{ path('disjfa_mozaic_admin_season_item_create', {'unsplashSeason': unsplashSeason.id}) }}" class="btn btn-outline-primary">
-            <i class="fas fa-plus"></i>
-            {{ 'admin.button.season_add_item' | trans | desc('Add item') }}
-        </a>
     </div>
 {% endblock %}

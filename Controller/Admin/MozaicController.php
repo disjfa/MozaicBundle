@@ -78,14 +78,10 @@ class MozaicController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $unsplashId = $form->get('unsplashId')->getData();
 
-            $unsplashPhoto = $this->getDoctrine()->getRepository(UnsplashPhoto::class)->find($unsplashId);
-
-            if (false === $unsplashPhoto instanceof UnsplashPhoto) {
-                try {
-                    $unsplashPhoto = $this->unsplashClient->find($unsplashId);
-                } catch (Exception $e) {
-                    $this->addFlash('warning', $e->getMessage());
-                }
+            try {
+                $unsplashPhoto = $this->unsplashClient->find($unsplashId);
+            } catch (Exception $e) {
+                $this->addFlash('warning', $e->getMessage());
             }
         }
 
