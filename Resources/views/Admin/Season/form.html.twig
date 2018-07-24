@@ -1,5 +1,7 @@
 {% extends 'admin.html.twig' %}
 
+{% trans_default_domain 'mozaic' %}
+
 {% block title %}
     {{ 'admin.title.season_create' | trans | desc('Seasons form') }} - {{ parent() }}
 {% endblock %}

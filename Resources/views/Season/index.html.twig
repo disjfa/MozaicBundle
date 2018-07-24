@@ -1,7 +1,26 @@
 {% extends "base.html.twig" %}
 
+{% trans_default_domain 'mozaic' %}
+
 {% block title %}
     Seasons - {{ parent() }}
+{% endblock %}
+
+{% block meta_og %}
+    <meta property="og:type" content="puzzle"/>
+    <meta property="og:url" content="{{ path('disjfa_mozaic_season_index') }}"/>
+
+    {% for season in seasons | slice(0, 1) %}
+        {% if loop.first %}
+            <meta property="og:title" content="Seasons - {{ season.title }}"/>
+            {% for item in season.items | slice(0, 1) %}
+                <meta property="og:image" content="{{ item.unsplashPhoto | unsplash_photo_block }}"/>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    <meta property="og:image:width" content="600"/>
+    <meta property="og:image:height" content="338"/>
+    <meta property="og:description" content="Play a mozaic puzzle season"/>
 {% endblock %}
 
 {% block body %}
