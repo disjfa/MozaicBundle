@@ -2,7 +2,7 @@
 
 namespace Disjfa\MozaicBundle\Menu;
 
-use App\Menu\ConfigureMenuEvent;
+use Disjfa\MenuBundle\Menu\ConfigureMenuEvent;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 class MozaicAdminMenuListener

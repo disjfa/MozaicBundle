@@ -13,11 +13,11 @@
     <meta property="og:description" content="Play a mozaic puzzle"/>
 {% endblock %}
 
-{% block title %}
+{% block page_title %}
     Puzzle by {{ unsplashPhoto.unsplashUser.name }} - {{ parent() }}
 {% endblock %}
 
-{% block body %}
+{% block main %}
     <div class="container py-3">
         {% if unsplashSeason is defined %}
             <nav aria-label="breadcrumb">

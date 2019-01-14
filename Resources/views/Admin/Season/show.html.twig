@@ -2,15 +2,15 @@
 
 {% trans_default_domain 'mozaic' %}
 
-{% block title %}
+{% block page_title %}
     {{ unsplashSeason.title }} - {{ parent() }}
 {% endblock %}
 
-{% block page_title_text %}
+{% block content_title %}
     {{ unsplashSeason.title }}
 {% endblock %}
 
-{% block body %}
+{% block main %}
     <div class="container py-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">

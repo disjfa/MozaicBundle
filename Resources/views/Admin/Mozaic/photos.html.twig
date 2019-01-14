@@ -2,15 +2,15 @@
 
 {% trans_default_domain 'mozaic' %}
 
-{% block title %}
+{% block page_title %}
     {{ 'admin.title.all_photos' | trans | desc('All photos') }} - {{ parent() }}
 {% endblock %}
 
-{% block page_title_text %}
+{% block content_title %}
     {{ 'admin.page_title.all_photos' | trans | desc('All photos') }}
 {% endblock %}
 
-{% block body %}
+{% block main %}
     <div class="bg-light">
         <div class="container pt-3 pb-1">
             <div class="d-flex justify-content-center text-muted ">

@@ -2,15 +2,15 @@
 
 {% trans_default_domain 'mozaic' %}
 
-{% block page_title_text %}
+{% block content_title %}
     {{ 'admin.page_title.photo_by' | trans({'%username%': unsplashPhoto.unsplashUser.name}) | desc('Photo by %username%') }}
 {% endblock %}
 
-{% block title %}
+{% block page_title %}
     {{ 'admin.title.photo_by' | trans({'%username%': unsplashPhoto.unsplashUser.name}) | desc('Photo by %username%') }} - {{ parent() }}
 {% endblock %}
 
-{% block body %}
+{% block main %}
     <div class="container">
         <div class="row">
             <div class="col py-2">
