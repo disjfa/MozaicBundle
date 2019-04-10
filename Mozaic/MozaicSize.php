@@ -2,9 +2,6 @@
 
 namespace Disjfa\MozaicBundle\Mozaic;
 
-/**
- * @package Disjfa\MozaicBundle\Mozaic
- */
 class MozaicSize
 {
     /**
@@ -41,6 +38,4 @@ class MozaicSize
     {
         return $this->height;
     }
-
-
 }

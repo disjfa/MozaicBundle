@@ -9,11 +9,12 @@ class UnsplashPhotoRepository extends EntityRepository
 {
     /**
      * @param string $id
-     * @param null $lockMode
-     * @param null $lockVersion
-     * @return null|object
+     * @param null   $lockMode
+     * @param null   $lockVersion
+     *
+     * @return object|null
      */
-    public function find($id, $lockMode = NULL, $lockVersion = NULL)
+    public function find($id, $lockMode = null, $lockVersion = null)
     {
         return $this->findOneBy(['unsplashId' => $id]);
     }
@@ -21,6 +22,7 @@ class UnsplashPhotoRepository extends EntityRepository
     public function findAllPaginated(PaginatorInterface $paginator, $page = 1, $limit = 12)
     {
         $qb = $this->createQueryBuilder('u');
+
         return $paginator->paginate($qb, $page, $limit);
     }
 }

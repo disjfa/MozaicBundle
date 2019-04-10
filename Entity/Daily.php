@@ -1,4 +1,5 @@
 <?php
+
 namespace Disjfa\MozaicBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +25,7 @@ class Daily
     public function __construct(UnsplashPhoto $unsplashPhoto, DailyDateTime $dateDaily)
     {
         $this->unsplashPhoto = $unsplashPhoto;
-        $this->dateDaily = (string)$dateDaily;
+        $this->dateDaily = (string) $dateDaily;
     }
 
     /**
@@ -35,7 +36,6 @@ class Daily
         return $this->dateDaily;
     }
 
-
     /**
      * @return UnsplashPhoto
      */
@@ -43,5 +43,4 @@ class Daily
     {
         return $this->unsplashPhoto;
     }
-
 }

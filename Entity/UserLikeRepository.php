@@ -9,8 +9,10 @@ class UserLikeRepository extends EntityRepository
 {
     /**
      * @param UnsplashPhoto $unsplashPhoto
-     * @param int $userId
+     * @param int           $userId
+     *
      * @return mixed
+     *
      * @throws NonUniqueResultException
      */
     public function findUserLike(UnsplashPhoto $unsplashPhoto, int $userId)
@@ -23,5 +25,4 @@ class UserLikeRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
 }

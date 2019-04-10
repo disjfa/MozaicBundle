@@ -37,7 +37,9 @@ class MozaicController extends Controller
 
     /**
      * @Route("/daily", name="disjfa_mozaic_admin_mozaic_daily")
+     *
      * @param Request $request
+     *
      * @return Response
      */
     public function dailyAction(Request $request)
@@ -53,7 +55,9 @@ class MozaicController extends Controller
 
     /**
      * @Route("/photos", name="disjfa_mozaic_admin_mozaic_photos")
+     *
      * @param Request $request
+     *
      * @return Response
      */
     public function photosAction(Request $request)
@@ -67,7 +71,9 @@ class MozaicController extends Controller
 
     /**
      * @Route("/search", name="disjfa_mozaic_admin_mozaic_search")
+     *
      * @param Request $request
+     *
      * @return Response
      */
     public function searchAction(Request $request)
@@ -93,7 +99,9 @@ class MozaicController extends Controller
 
     /**
      * @Route("/show/{unsplashPhoto}", name="disjfa_mozaic_admin_mozaic_show")
+     *
      * @param UnsplashPhoto $unsplashPhoto
+     *
      * @return Response
      */
     public function showAction(UnsplashPhoto $unsplashPhoto)

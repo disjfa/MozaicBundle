@@ -63,6 +63,7 @@ class PuzzleController extends Controller
 
     /**
      * @Route("/daily", name="disjfa_mozaic_puzzle_daily")
+     *
      * @throws NonUniqueResultException
      */
     public function daylyAction()
@@ -86,6 +87,7 @@ class PuzzleController extends Controller
         }
 
         $unsplashPhoto = $daily->getUnsplashPhoto();
+
         return $this->redirectToRoute('disjfa_mozaic_puzzle_photo', ['unsplashPhoto' => $unsplashPhoto->getUnsplashId()]);
     }
 
@@ -107,7 +109,9 @@ class PuzzleController extends Controller
 
     /**
      * @Route("/{unsplashPhoto}", name="disjfa_mozaic_puzzle_photo")
+     *
      * @param UnsplashPhoto $unsplashPhoto
+     *
      * @return Response
      */
     public function photoAction(UnsplashPhoto $unsplashPhoto)
@@ -118,7 +122,7 @@ class PuzzleController extends Controller
         } else {
             $userId = $this->getUser()->getId();
             $myPhotos = $unsplashPhoto->getUserPhotoByUser($userId);
-            $myLike = $unsplashPhoto->getLikeByUser($userId);;
+            $myLike = $unsplashPhoto->getLikeByUser($userId);
         }
 
         return $this->render('@DisjfaMozaic/Puzzle/photo.html.twig', [
@@ -130,9 +134,12 @@ class PuzzleController extends Controller
 
     /**
      * @Route("/{unsplashPhoto}/like", name="disjfa_mozaic_puzzle_photo_like")
+     *
      * @param UnsplashPhoto $unsplashPhoto
-     * @param Request $request
+     * @param Request       $request
+     *
      * @return Response
+     *
      * @throws NonUniqueResultException
      */
     public function likeAction(UnsplashPhoto $unsplashPhoto, Request $request)
@@ -152,20 +159,23 @@ class PuzzleController extends Controller
 
         $this->addFlash('success', $this->translator->trans('mozaic.liked.message', [], 'mozaic'));
 
-        if($request->headers->has('referer')) {
+        if ($request->headers->has('referer')) {
             return $this->redirect($request->headers->get('referer'));
         }
 
         return $this->redirectToRoute('disjfa_mozaic_puzzle_photo', [
-            'unsplashPhoto' => $unsplashPhoto->getUnsplashId()
+            'unsplashPhoto' => $unsplashPhoto->getUnsplashId(),
         ]);
     }
 
     /**
      * @Route("/{unsplashPhoto}/unlike", name="disjfa_mozaic_puzzle_photo_unlike")
+     *
      * @param UnsplashPhoto $unsplashPhoto
-     * @param Request $request
+     * @param Request       $request
+     *
      * @return Response
+     *
      * @throws NonUniqueResultException
      */
     public function unlikeAction(UnsplashPhoto $unsplashPhoto, Request $request)
@@ -185,12 +195,12 @@ class PuzzleController extends Controller
 
         $this->addFlash('success', $this->translator->trans('mozaic.unliked.message', [], 'mozaic'));
 
-        if($request->headers->has('referer')) {
+        if ($request->headers->has('referer')) {
             return $this->redirect($request->headers->get('referer'));
         }
 
         return $this->redirectToRoute('disjfa_mozaic_puzzle_photo', [
-            'unsplashPhoto' => $unsplashPhoto->getUnsplashId()
+            'unsplashPhoto' => $unsplashPhoto->getUnsplashId(),
         ]);
     }
 }

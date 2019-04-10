@@ -1,4 +1,5 @@
 <?php
+
 namespace Disjfa\MozaicBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

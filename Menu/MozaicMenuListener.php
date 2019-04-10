@@ -15,7 +15,7 @@ class MozaicMenuListener
         try {
             $menu = $event->getMenu();
             $mozaicMenu = $menu->addChild('Mozaic puzzle', [
-                'route' => 'disjfa_mozaic_puzzle_index'
+                'route' => 'disjfa_mozaic_puzzle_index',
             ])->setExtra('icon', 'fa-puzzle-piece');
 
             $mozaicMenu->addChild('Seasons', ['route' => 'disjfa_mozaic_season_index'])->setExtra('icon', 'fa-dice');

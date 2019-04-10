@@ -15,6 +15,7 @@ class SeasonController extends Controller
 {
     /**
      * @Route("", name="disjfa_mozaic_season_index")
+     *
      * @return Response
      */
     public function indexAction()
@@ -26,7 +27,9 @@ class SeasonController extends Controller
 
     /**
      * @Route("/{unsplashSeason}", name="disjfa_mozaic_season_show")
+     *
      * @param UnsplashSeason $unsplashSeason
+     *
      * @return Response
      */
     public function showAction(UnsplashSeason $unsplashSeason)
@@ -40,8 +43,10 @@ class SeasonController extends Controller
 
     /**
      * @Route("/{unsplashSeason}/{unsplashSeasonItem}", name="disjfa_mozaic_season_item")
-     * @param UnsplashSeason $unsplashSeason
+     *
+     * @param UnsplashSeason     $unsplashSeason
      * @param UnsplashSeasonItem $unsplashSeasonItem
+     *
      * @return Response
      */
     public function itemAction(UnsplashSeason $unsplashSeason, UnsplashSeasonItem $unsplashSeasonItem)
@@ -53,9 +58,8 @@ class SeasonController extends Controller
         } else {
             $userId = $this->getUser()->getId();
             $myPhotos = $unsplashPhoto->getUserPhotoByUser($userId);
-            $myLike = $unsplashPhoto->getLikeByUser($userId);;
+            $myLike = $unsplashPhoto->getLikeByUser($userId);
         }
-
 
         return $this->render('@DisjfaMozaic/Puzzle/photo.html.twig', [
             'unsplashSeason' => $unsplashSeason,

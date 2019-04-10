@@ -4,11 +4,9 @@ namespace Disjfa\MozaicBundle\Security;
 
 use Disjfa\MozaicBundle\Entity\UnsplashSeason;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Guard\AuthenticatorInterface;
 
 class UnsplashSeasonVoter extends Voter
 {
@@ -26,18 +24,19 @@ class UnsplashSeasonVoter extends Voter
 
     /**
      * @param string $attribute
-     * @param mixed $subject
+     * @param mixed  $subject
+     *
      * @return bool
      */
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, array(self::VIEW, self::EDIT))) {
+        if ( ! in_array($attribute, [self::VIEW, self::EDIT])) {
             return false;
         }
 
         // only vote on Post objects inside this voter
-        if (!$subject instanceof UnsplashSeason) {
+        if ( ! $subject instanceof UnsplashSeason) {
             return false;
         }
 
@@ -45,9 +44,10 @@ class UnsplashSeasonVoter extends Voter
     }
 
     /**
-     * @param string $attribute
+     * @param string         $attribute
      * @param UnsplashSeason $subject
      * @param TokenInterface $token
+     *
      * @return bool
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -74,5 +74,4 @@ class UnsplashSeasonVoter extends Voter
 
         return false;
     }
-
 }

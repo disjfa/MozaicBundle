@@ -46,7 +46,9 @@ class SeasonController extends Controller
 
     /**
      * @Route("/{unsplashSeason}/show", name="disjfa_mozaic_admin_season_show")
+     *
      * @param UnsplashSeason $unsplashSeason
+     *
      * @return Response
      */
     public function showAction(Request $request, UnsplashSeason $unsplashSeason)
@@ -64,8 +66,9 @@ class SeasonController extends Controller
                 $this->getDoctrine()->getManager()->flush();
 
                 $this->addFlash('success', 'Photo added');
+
                 return $this->redirectToRoute('disjfa_mozaic_admin_season_item_edit', [
-                    'unsplashSeasonItem' => $unsplashSeasonItem->getId()
+                    'unsplashSeasonItem' => $unsplashSeasonItem->getId(),
                 ]);
             } catch (Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
@@ -80,8 +83,10 @@ class SeasonController extends Controller
 
     /**
      * @Route("/{unsplashSeason}/edit", name="disjfa_mozaic_admin_season_edit")
-     * @param Request $request
+     *
+     * @param Request        $request
      * @param UnsplashSeason $unsplashSeason
+     *
      * @return Response
      */
     public function editAction(Request $request, UnsplashSeason $unsplashSeason)
@@ -95,12 +100,14 @@ class SeasonController extends Controller
     public function createAction(Request $request)
     {
         $unsplashSeason = new UnsplashSeason();
+
         return $this->handleForm($request, $unsplashSeason);
     }
 
     /**
-     * @param Request $request
+     * @param Request        $request
      * @param UnsplashSeason $unsplashSeason
+     *
      * @return Response
      */
     private function handleForm(Request $request, UnsplashSeason $unsplashSeason)

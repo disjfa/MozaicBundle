@@ -10,9 +10,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * @package UserBundle\GlynnAdminMenu
- */
 class UnsplashClient
 {
     /**
@@ -23,7 +20,7 @@ class UnsplashClient
     /**
      * @param $applicationId
      * @param $secret
-     * @param RouterInterface $router
+     * @param RouterInterface        $router
      * @param EntityManagerInterface $entityManager
      *
      * @throws Exception
@@ -49,26 +46,30 @@ class UnsplashClient
     public function random()
     {
         $photo = Photo::random([]);
+
         return $this->updateOrInsertPhoto($photo);
     }
 
     /**
      * @param string $unsplashId
+     *
      * @return UnsplashPhoto
      */
     public function find(string $unsplashId)
     {
         $unsplashPhoto = $this->entityManager->getRepository(UnsplashPhoto::class)->find($unsplashId);
-        if($unsplashPhoto instanceof UnsplashPhoto) {
+        if ($unsplashPhoto instanceof UnsplashPhoto) {
             return $unsplashPhoto;
         }
 
         $photo = Photo::find($unsplashId);
+
         return $this->updateOrInsertPhoto($photo);
     }
 
     /**
      * @param Photo $photo
+     *
      * @return UnsplashPhoto
      */
     private function updateOrInsertPhoto(Photo $photo)
@@ -87,6 +88,7 @@ class UnsplashClient
         }
 
         $this->entityManager->flush();
+
         return $unsplashPhoto;
     }
 }

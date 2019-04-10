@@ -7,12 +7,13 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
 /**
- * DailyRepository
+ * DailyRepository.
  */
 class DailyRepository extends EntityRepository
 {
     /**
      * @param int $maxResults
+     *
      * @return Daily[]
      */
     public function findLatest($maxResults = 16)
@@ -26,20 +27,23 @@ class DailyRepository extends EntityRepository
 
     /**
      * @param DailyDateTime $dateTime
+     *
      * @return Daily|null
+     *
      * @throws NonUniqueResultException
      */
     public function findDailyByDate(DailyDateTime $dateTime)
     {
         $qb = $this->createQueryBuilder('daily');
         $qb->where('daily.dateDaily = :date');
-        $qb->setParameter('date', (string)$dateTime);
+        $qb->setParameter('date', (string) $dateTime);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
      * @param DateTime $dateTime
+     *
      * @return Daily[]
      */
     public function findByMonthAndYear(DateTime $dateTime)
@@ -60,5 +64,4 @@ class DailyRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
-
 }

@@ -21,12 +21,13 @@ class PuzzleController extends Controller
 {
     /**
      * @Route("/{unsplashPhoto}", name="disjfa_mozaic_api_puzzle_photo")
+     *
      * @param UnsplashPhoto $unsplashPhoto
+     *
      * @return Response
      */
     public function photoAction(UnsplashPhoto $unsplashPhoto)
     {
-
 //        $mozaicPuzzel = new MozaicPuzzle($unsplashPhoto);
 //        dump($mozaicPuzzel);
 //        exit;
@@ -51,8 +52,8 @@ class PuzzleController extends Controller
         $blockWidth = floor($w / $colX);
         $blockHeight = floor($h / $colY);
 
-        for ($i = 0; $i < $colX; $i++) {
-            for ($j = 0; $j < $colY; $j++) {
+        for ($i = 0; $i < $colX; ++$i) {
+            for ($j = 0; $j < $colY; ++$j) {
                 if (isset($columns[$i][$j])) {
                     continue;
                 }
@@ -64,11 +65,11 @@ class PuzzleController extends Controller
                 $sizeY = $j + $sizeY > $colY ? $colY - $j : $sizeY;
                 $maxY = $sizeY;
 
-                for ($mx = $i; $mx < $i + $sizeX; $mx++) {
+                for ($mx = $i; $mx < $i + $sizeX; ++$mx) {
                     if (isset($columns[$mx])) {
                         $maxX = $mx - $i < $maxX ? $mx - $i + 1 : $maxX;
                     }
-                    for ($my = $j; $my < $j + $sizeY; $my++) {
+                    for ($my = $j; $my < $j + $sizeY; ++$my) {
                         if (isset($columns[$mx][$my])) {
                             $maxY = $my - $j < $maxY ? $my - $j + 1 : $maxY;
                         }
@@ -76,8 +77,8 @@ class PuzzleController extends Controller
                 }
                 $sizeX = $maxX;
                 $sizeY = $maxY;
-                for ($mx = $i; $mx < $i + $sizeX; $mx++) {
-                    for ($my = $j; $my < $j + $sizeY; $my++) {
+                for ($mx = $i; $mx < $i + $sizeX; ++$mx) {
+                    for ($my = $j; $my < $j + $sizeY; ++$my) {
                         $columns[$mx][$my] = false;
                     }
                 }
@@ -92,12 +93,12 @@ class PuzzleController extends Controller
                         $i * $realWidth,
                         $j * $realHeight,
                         $realWidth * $sizeX,
-                        $realHeight * $sizeY
-                    ])
+                        $realHeight * $sizeY,
+                    ]),
                 ];
 
                 $columns[$i][$j] = [
-                    'image' => $image . '?' . http_build_query($params, '&amp;'),
+                    'image' => $image.'?'.http_build_query($params, '&amp;'),
                     'x' => $i,
                     'y' => $j,
                     'styles' => [
@@ -113,8 +114,7 @@ class PuzzleController extends Controller
                         'top' => $j * $blockHeight / $h * 100,
                         'width' => $iWidth / $w * 100,
                         'height' => $iHeight / $h * 100,
-
-                    ]
+                    ],
                 ];
             }
             ksort($columns[$i]);
@@ -132,7 +132,7 @@ class PuzzleController extends Controller
         }
         $now = new DateTime('now');
         $dates = [
-            $unsplashPhoto->getId() => $now->format('r')
+            $unsplashPhoto->getId() => $now->format('r'),
         ];
 
         $this->get('session')->set('dates', $dates);
@@ -144,7 +144,9 @@ class PuzzleController extends Controller
     /**
      * @Route("/{unsplashPhoto}/finish", name="disjfa_mozaic_api_puzzle_finish")
      * @Method("POST")
+     *
      * @param UnsplashPhoto $unsplashPhoto
+     *
      * @return Response
      */
     public function finishAction(UnsplashPhoto $unsplashPhoto, Request $request)

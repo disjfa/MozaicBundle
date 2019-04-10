@@ -4,9 +4,6 @@ namespace Disjfa\MozaicBundle\Mozaic;
 
 use Disjfa\MozaicBundle\Entity\UnsplashPhoto;
 
-/**
- * @package Disjfa\MozaicBundle\Mozaic
- */
 class MozaicPuzzle
 {
     /**
@@ -32,6 +29,7 @@ class MozaicPuzzle
 
     /**
      * MozaicPuzzle constructor.
+     *
      * @param UnsplashPhoto $unsplashPhoto
      */
     public function __construct(UnsplashPhoto $unsplashPhoto)
@@ -49,8 +47,8 @@ class MozaicPuzzle
 
         $this->blocks = [];
 
-        for ($i = 0; $i < $colX; $i++) {
-            for ($j = 0; $j < $colY; $j++) {
+        for ($i = 0; $i < $colX; ++$i) {
+            for ($j = 0; $j < $colY; ++$j) {
                 if ($this->containsXAndY($i, $j)) {
                     continue;
                 }
@@ -62,11 +60,11 @@ class MozaicPuzzle
                 $sizeY = $j + $sizeY > $colY ? $colY - $j : $sizeY;
                 $maxY = $sizeY;
 
-                for ($mx = $i; $mx < $i + $sizeX; $mx++) {
+                for ($mx = $i; $mx < $i + $sizeX; ++$mx) {
                     if ($this->containsXAndY($mx, $j)) {
                         $maxX = $mx - $i < $maxX ? $mx - $i + 1 : $maxX;
                     }
-                    for ($my = $j; $my < $j + $sizeY; $my++) {
+                    for ($my = $j; $my < $j + $sizeY; ++$my) {
                         if ($this->containsXAndY($mx, $my)) {
                             $maxY = $my - $j < $maxY ? $my - $j + 1 : $maxY;
                         }
@@ -74,8 +72,8 @@ class MozaicPuzzle
                 }
                 $sizeX = $maxX;
                 $sizeY = $maxY;
-                for ($mx = $i; $mx < $i + $sizeX; $mx++) {
-                    for ($my = $j; $my < $j + $sizeY; $my++) {
+                for ($mx = $i; $mx < $i + $sizeX; ++$mx) {
+                    for ($my = $j; $my < $j + $sizeY; ++$my) {
                         $this->blocks[] = new MozaicBlock($mx, $my);
                     }
                 }
@@ -90,14 +88,14 @@ class MozaicPuzzle
                         $i * $realBlockSize->getWidth(),
                         $j * $realBlockSize->getHeight(),
                         $realBlockSize->getWidth() * $sizeX,
-                        $realBlockSize->getHeight() * $sizeY
-                    ])
+                        $realBlockSize->getHeight() * $sizeY,
+                    ]),
                 ];
 
                 $this->blocks[] = new MozaicBlock($i, $j);
 
                 $columns[$i][$j] = [
-                    'image' => $image . '?' . http_build_query($params, '&amp;'),
+                    'image' => $image.'?'.http_build_query($params, '&amp;'),
                     'styles' => [
                         'left' => $i * $blockWidth,
                         'top' => $j * $blockHeight,
@@ -111,7 +109,6 @@ class MozaicPuzzle
             ksort($columns[$i]);
         }
         ksort($columns);
-
 
         dump($unsplashPhoto);
         exit;

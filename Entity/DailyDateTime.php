@@ -5,8 +5,7 @@ namespace Disjfa\MozaicBundle\Entity;
 use DateTime;
 
 /**
- * Class DailyDateTime
- * @package Disjfa\MozaicBundle\Entity
+ * Class DailyDateTime.
  */
 class DailyDateTime extends DateTime
 {

@@ -2,10 +2,8 @@
 
 namespace Disjfa\MozaicBundle\Controller\Admin;
 
-use Disjfa\MozaicBundle\Entity\UnsplashSeason;
 use Disjfa\MozaicBundle\Entity\UnsplashSeasonItem;
 use Disjfa\MozaicBundle\Form\Type\AdminSeasonItemType;
-use Disjfa\MozaicBundle\Form\Type\AdminSeasonType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,8 +27,10 @@ class SeasonItemController extends Controller
 
     /**
      * @Route("/{unsplashSeasonItem}/edit", name="disjfa_mozaic_admin_season_item_edit")
-     * @param Request $request
+     *
+     * @param Request            $request
      * @param UnsplashSeasonItem $unsplashSeasonItem
+     *
      * @return Response
      */
     public function editAction(Request $request, UnsplashSeasonItem $unsplashSeasonItem)
@@ -39,8 +39,9 @@ class SeasonItemController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request            $request
      * @param UnsplashSeasonItem $unsplashSeasonItem
+     *
      * @return Response
      */
     private function handleForm(Request $request, UnsplashSeasonItem $unsplashSeasonItem)

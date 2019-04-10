@@ -2,9 +2,6 @@
 
 namespace Disjfa\MozaicBundle\Mozaic;
 
-/**
- * @package Disjfa\MozaicBundle\Mozaic
- */
 class MozaicBlock
 {
     /**
@@ -19,7 +16,6 @@ class MozaicBlock
 
     public function __construct($posX, $posY)
     {
-
     }
 
     /**

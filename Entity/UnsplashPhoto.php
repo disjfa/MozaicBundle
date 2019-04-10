@@ -136,8 +136,9 @@ class UnsplashPhoto
 
     /**
      * UnsplashPhoto constructor.
+     *
      * @param UnsplashUser $unsplashUser
-     * @param string $unsplashId
+     * @param string       $unsplashId
      * @param $createdAt
      * @param $width
      * @param $height
@@ -186,7 +187,7 @@ class UnsplashPhoto
 
     public function __toString()
     {
-        return $this->unsplashId . ' - ' . $this->description . $this->unsplashUser->getName();
+        return $this->unsplashId.' - '.$this->description.$this->unsplashUser->getName();
     }
 
     /**
@@ -287,6 +288,7 @@ class UnsplashPhoto
 
     /**
      * @param int $userId
+     *
      * @return UserPhoto[]
      */
     public function getUserPhotoByUser(int $userId)
@@ -299,6 +301,7 @@ class UnsplashPhoto
 
     /**
      * @param int $userId
+     *
      * @return UserLike
      */
     public function getLikeByUser(int $userId)

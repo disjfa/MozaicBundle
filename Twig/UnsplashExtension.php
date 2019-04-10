@@ -10,9 +10,9 @@ class UnsplashExtension extends Twig_Extension
 {
     public function getFilters()
     {
-        return array(
-            new Twig_SimpleFilter('unsplash_photo_block', array($this, 'unsplashPhotoBlock')),
-        );
+        return [
+            new Twig_SimpleFilter('unsplash_photo_block', [$this, 'unsplashPhotoBlock']),
+        ];
     }
 
     public function unsplashPhotoBlock(UnsplashPhoto $unsplashPhoto)
@@ -33,19 +33,18 @@ class UnsplashExtension extends Twig_Extension
             'w' => $outputWidth,
             'h' => $outputHeight,
             'rect' => implode(',', [
-                (int)($blockX*5),
-                (int)($blockY*3),
-                (int)$widthY,
-                (int)$widthX,
-            ])
+                (int) ($blockX * 5),
+                (int) ($blockY * 3),
+                (int) $widthY,
+                (int) $widthX,
+            ]),
         ];
 
-        return $unsplashPhoto->getUrlRaw() . '?' . http_build_query($params, '&amp;');
+        return $unsplashPhoto->getUrlRaw().'?'.http_build_query($params, '&amp;');
     }
 
     public function getName()
     {
         return 'unsplash_extension';
     }
-
 }
